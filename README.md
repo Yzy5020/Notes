@@ -7,8 +7,8 @@ Notes about:
 
 ​    DL
 
-​    ML
+​    ML (not added)
 
-​    Automata theory
+​    Automata theory (not added)
 
 ​    auto grad
