@@ -1,0 +1,64 @@
+\documentclass[UTF8]{article}
+\usepackage{ctex}
+\usepackage{graphicx}
+\usepackage{amsmath}
+\usepackage{amssymb}    % \therefore \because
+\usepackage{bm}     % \bm 用于数学字符加粗
+
+
+\begin{document}
+    \title{关于自动求导机制的理解}
+    \author{Yzy}
+    \maketitle
+    \tableofcontents
+
+    \section{投影值，投影向量}
+    由\textbf{向量点乘公式以及直角三角形}来推投影值$\operatorname{Prj}_{\mathbf{a}} \mathbf{b}=\mathbf{b} \cdot \dfrac{\mathbf{a}}{|\mathbf{a}|}$。
+    \\
+    $\vec{\bm{a}}\cdot \vec{\bm{b}}=|\bm{\vec{a}}||\bm{\vec{b}}|\cos \theta \quad \rightarrow \cos \theta = \dfrac{\vec{\bm{a}}\cdot \vec{\bm{b}}}{|\bm{\vec{a}}||\bm{\vec{b}}|}$
+    \\
+    由直角三角形三边之间的关系可知，直角边=斜边乘上$\cos \theta$。即直角边长=$\bm{\vec{b}}\cos \theta=\dfrac{\bm{\vec{a}}\cdot \bm{\vec{b}}}{|\bm{\vec{a}}|}$，\textbf{也就是b在a上的投影值(投影向量的模)！}
+    \\
+    而b在a上的投影向量$\bm{\vec{p}}=x\bm{\vec{a}}$，\textbf{其中$x$是倍数！}倘若$\bm{\vec{p}}=x\dfrac{\bm{\vec{a}}}{|\bm{\vec{a}}|}$\textbf{则x便是上述的投影值！}
+    
+    \section{方向导数与梯度的关系}
+    $\frac{\partial f}{\partial l}=\operatorname{grad} f \cdot \frac{\vec{l}}{|\vec{l}|}$， 可以看出：方向导数是梯度在向量$\bm{\vec{l}}$上的投影！\\
+    所以当沿$\bm{\vec{l}}$方向的单位向量$\bm{\vec{v}}=\dfrac{\bm{\vec{l}}}{|\bm{\vec{l}}|}=(1, 1, 1)$时，方向导数便是梯度！！！
+    
+    \section{auto grad理解}
+    以三维向量为例：$X=\left[x_{1}, x_{2}, x_{3}\right]$ \quad $\rightarrow Y=X^{2}$
+    \\
+    $Y$对$X$的导数即为向量对向量求导，得到一个jacobi矩阵$J=\left(\begin{array}{lll}{\frac{\partial y_{1}}{\partial x_{1}}} & {\frac{\partial y_{1}}{\partial x_{2}}} & {\frac{\partial y_{1}}{\partial x_{3}}} \\ {\frac{\partial y_{2}}{\partial x_{1}}} & {\frac{\partial y_{2}}{\partial x_{2}}} & {\frac{\partial y_{2}}{\partial x_{3}}} \\ {\frac{\partial y_{3}}{\partial x_{1}}} & {\frac{\partial y_{3}}{\partial x_{2}}} & {\frac{\partial y_{3}}{\partial x_{3}}}\end{array}\right)$
+    \\
+    其中$y_{1}=f_{1}\left(x_{1}, x_{2}, x_{3}\right)=x_{1}^{2}$，$y_{2}, y_{3}$同理！\\
+    $Y$对每一个分量$x_{i}$的导数是：各个分量函数$y_{i}$对$x_{i}$的偏导数沿某一方向$\bm{\vec{v}}$的累积！一般默认方向是$\bm{\vec{v}}=(1,1,1)$。比如$\dfrac{d(Y)}{d(x_{1})}=\frac{\partial y_{1}}{\partial x_{1}}+\frac{\partial y_{2}}{\partial x_{1}}+\frac{\partial y_{3}}{\partial x_{1}}$, $d(Y)$对$x_{2},x_{3}$的导数以此类推。
+    \\
+    所以$\dfrac{d(Y)}{d(x_{1})}$可以理解为\textbf{关于}$x_{i}$\textbf{的偏导向量}$(\frac{\partial y_{1}}{\partial x_{1}},\frac{\partial y_{2}}{\partial x_{1}},\frac{\partial y_{3}}{\partial x_{1}})$\textbf{在$\bm{\vec{v}}$方向上的投影！}
+    \\
+    以链式法则chain rule来看，也是这样，如对$x_{1}$求导，因为每个分量函数$y_{i}$里都带有$x_{1}$, 所以就是上述的结果！
+    \\
+    高数中：$u=3x+2y, v=2x+3y, z=u+v \Rightarrow X=[x,y], Y=[u, v],z=g(Y)$，所以以矩阵的角度来看，$\vec{y}=f(\vec{x})$，$l=g(\vec{y})$，对每个变量$x_{i}$的求导方式用矩阵来计算：
+    \\
+    $J=\left(\begin{array}{ccc}{\frac{\partial y_{1}}{\partial x_{1}}} & {\cdots} & {\frac{\partial y_{1}}{\partial x_{n}}} \\ {\vdots} & {\ddots} & {\vdots} \\ {\frac{\partial y_{m}}{\partial x_{1}}} & {\cdots} & {\frac{\partial y_{m}}{\partial x_{n}}}\end{array}\right)\quad \rightarrow$ $J^{T} = \left(\begin{array}{ccc}{\frac{\partial y_{1}}{\partial x_{1}}} & {\cdots} & {\frac{\partial y_{m}}{\partial x_{1}}} \\ {\vdots} & {\ddots} & {\vdots} \\ {\frac{\partial y_{1}}{\partial x_{n}}} & {\cdots} & {\frac{\partial y_{m}}{\partial x_{n}}}\end{array}\right)$
+    \\
+    利用链式求导里的中间导数$v=\left(\frac{\partial l}{\partial y_{1}} \quad \cdots \quad \frac{\partial l}{\partial y_{m}}\right)^{T}$，有：
+    \\
+    $J^{T} \cdot v=\left(\begin{array}{ccc}{\frac{\partial y_{1}}{\partial x_{1}}} & {\cdots} & {\frac{\partial y_{m}}{\partial x_{1}}} \\ {\vdots} & {\ddots} & {\vdots} \\ {\frac{\partial y_{1}}{\partial x_{n}}} & {\cdots} & {\frac{\partial y_{m}}{\partial x_{n}}}\end{array}\right)\left(\begin{array}{c}{\frac{\partial l}{\partial y_{1}}} \\ {\vdots} \\ {\frac{\partial l}{\partial y_{m}}}\end{array}\right)=\left(\begin{array}{c}{\frac{\partial l}{\partial x_{1}}} \\ {\vdots} \\ {\frac{\partial l}{\partial x_{n}}}\end{array}\right)$，其中:
+    \\
+    $\dfrac{\partial l}{\partial x_{1}}=\dfrac{\partial l}{\partial y_{1}}\dfrac{\partial y_{1}}{\partial x_{1}} + \cdots + \dfrac{\partial l}{\partial y_{m}}\dfrac{\partial y_{m}}{\partial x_{1}}$
+    \\
+    $\dfrac{\partial l}{\partial x_{2}}=\dfrac{\partial l}{\partial y_{1}}\dfrac{\partial y_{1}}{\partial x_{2}} + \cdots + \dfrac{\partial l}{\partial y_{m}}\dfrac{\partial y_{m}}{\partial x_{2}}$,......以此类推。
+    \\
+    所以，\textbf{利用Jacobi矩阵来一次性计算$l$对所有$x_{i}$的偏导累积:}
+    \begin{itemize}
+        \item  若$l$是标量，则$\bm{\vec{v}}$可以按$l=g(\vec{y})$计算出来
+        \item  若$l$是向量，则$\bm{\vec{v}}$一般默认取$(1,1,1)$的方向，也可以按需求取其他任意方向！
+    \end{itemize}
+    \textbf{注意：}如果只有$\vec{y}=f(\vec{x})$(也就是上述第二种情况)，想得到$\dfrac{d(y)}{dx}$，会在计算图中添加一个运算$l=g(\vec{y})$，$l$是标量！(\textbf{实际上$l=sum(\vec{y})$, 因为$\vec{v}$默认=全1})当进行$l.backward()$实际上是$y.backward(\bm{\vec{v}})$,这个$\bm{v}$一般取与$\vec y$维度相同的全1矩阵，这样得到的就是$[\dfrac{d\vec{y}}{dx_{1}}, \dfrac{d\vec{y}}{dx_{2},} ...]$，
+    \textbf{因为$\vec{v}$把$\dfrac{dl}{dy_{i}}$全部变成了1}。此处$\bm{\vec{v}}$可以理解为对应$\vec{y}$的$\dfrac{dl}{\vec{y}}$。
+
+
+\end{document}
+    
+
+

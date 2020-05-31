@@ -1,7 +1,6 @@
 # filter
-/*/
-	*.aux
-	*.log
-	*.out
-	*.synctex.gz
-	*.toc
+*.aux
+*.log
+*.out
+*.synctex.gz
+*.toc
