@@ -40,6 +40,22 @@
     在监督学习中往往要利用一个loss function来度量当前模型从输入得到的结果与真实值的误差。通过最小化这个误差，把整个模型往最好的方向调整即得到最好的weight和b;
     而最小化的方法便有梯度下降，牛顿法，拟牛顿法等...
 
+    \section{RNN BPTT(back propagation through time)}
+    模型定义参考\href{https://www.cnblogs.com/pinard/p/6509630.html}{刘建平RNN推导}
+
+    \subsection{前向传播}
+    \begin{enumerate}
+        \item 对于任意一个序列索引号t：$h^{(t)}=\sigma\left(z^{(t)}\right)=\sigma\left(U x^{(t)}+W h^{(t-1)}+b\right)$，这里的$\sigma$是tanh函数
+        \item 序列索引号t时模型的输出$o^{t}$的表达式为：$o^{(t)}=V h^{(t)}+c$，$c，b$一样，都是偏置向量
+        \item 最终在序列索引号t时预测输出$\hat{y}^{(t)}=\sigma\left(o^{(t)}\right)$，这里的$\sigma$是softmax函数
+    \end{enumerate}
+
+    \subsection{反向传播}
+    通过梯度下降法的一轮迭代，得到模型参数$U,W,V,b,c$，\textbf{这些参数在序列的各个位置是共享的}，BP时更新的是相同的参数！
+
+    由于在序列的每个位置都有损失函数$L^{(t)}=-{y^{(t)}}^T log{\hat{y}^{(t)}}$，因此最终的损失$L$为：$L=\sum_{t=1}^{\tau} L^{(t)}$
+
+    下面的推导详见草稿纸笔记。。。
 
 
 \end{document}

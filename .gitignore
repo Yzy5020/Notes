@@ -1,4 +1,5 @@
 # filter
+/.history/
 *.aux
 *.log
 *.out
