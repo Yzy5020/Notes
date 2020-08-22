@@ -2,3 +2,71 @@
 内积：一个行向量乘以一个列向量，结果是一个数；
 
 外积：一个列向量乘以一个行向量，结果是一个矩阵；(外积是一种特殊的克罗内克积kronecker product)
+
+假设$\bm{a}^T$为行向量，$\bm{b}$是列向量， 即$\bm{a} = \left[\begin{array}{c}a_{1} \\ a_{2}\end{array}\right], \bm{b} = \left[\begin{array}{c}b_{1} \\ b_{2}\end{array}\right]$
+
+则内积为：$\bm{a}^{T} \cdot \bm{b}=a_{1} b_{1}+a_{2} b_{2}$， 外积为：$\bm{b} \otimes \bm{a}^{T}=\left[\begin{array}{ll}b_{1} a_{1} & b_{1} a_{2} \\ b_{2} a_{1} & b_{2} a_{2}\end{array}\right]$
+
+矩阵是由向量组成，从不同的角度对矩阵进行抽象，可以将矩阵乘法转换为向量乘法。
+
+给定一个矩阵$\bm{A}_{2 \times 2}$(规定行数和列数以便于理解)：
+
+可以将其看成\textbf{由两个行向量组成的列向量}$\left[\begin{array}{c}\bm{a}_{1}^{T} \\ \bm{a}_{2}^{T}\end{array}\right]$；
+
+也可以看成\textbf{由两个列向量组成的行向量}$\left[\begin{array}{ll}\bm{a}_{1} & \bm{a}_{2}\end{array}\right]$。
+
+\subsection{角度一: 行乘列(外积)}
+$\bm{A}$是由行向量组成的列向量，$\bm{B}$是由列向量组成的行向量。
+
+$$\bm{A} \bm{B}=\left[\begin{array}{c}\bm{a}_{1}^{T} \\ \bm{a}_{2}^{T}\end{array}\right]\left[\begin{array}{ll}\bm{b}_{1} & \bm{b}_{2}\end{array}\right]$$
+
+此时矩阵乘积变为了两个新的向量的外积形式，按照外积定义则有：
+
+$$\bm{A} \bm{B}=\left[\begin{array}{ll}\bm{a}_{1}^{T} \bm{b}_{1} & \bm{a}_{1}^{T} \bm{b}_{2} \\ \bm{a}_{2}^{T} \bm{b}_{1} & \bm{a}_{2}^{T} \bm{b}_{2}\end{array}\right]$$
+
+注意到这里每一个$\bm{a}_{i}^{T} \bm{b}_{j}$都是一个内积，即一个标量，作为$\bm{AB}$矩阵中第$i$行第$j$列的元素。
+因此，矩阵乘积可以看成是两个向量的外积，并且外积矩阵中的每一个元素是一个内积,这是最直接的理解方式。
+
+\subsection{角度二：列空间}
+$\bm{A}$和$\bm{B}$都是由列向量组成的行向量
+$$\bm{A B}=\left[\begin{array}{ll}\bm{a}_{1} & \bm{a}_{2}\end{array}\right]\left[\begin{array}{ll}\bm{b}_{1} & \bm{b}_{2}\end{array}\right]$$
+
+令$\bm{C = AB}$， 考虑$\bm{C}$的每一个列向量：
+$$\bm{c}_{1}=A \bm{b}_{1}=\left[\begin{array}{cc}\bm{a}_{1} & \bm{a}_{2}\end{array}\right] \bm{b}_{1}=\bm{a}_{1} {b}_{11}+\bm{a}_{2} {b}_{12}$$
+同理：
+$$\bm{c}_{2}=\bm{a}_{1} b_{21}+\bm{a}_{2} b_{22}$$
+因此，矩阵$\bm{C}$的每一个列向量，是$\bm{A}$的列向量的一个线性组合，该线性组合中的系数是$\bm{b}_i$的各个元素。从这个角度说$\bm{C}$的每一列都存在于$\bm{A}$的列向量空间内。
+
+\subsection{角度三：行空间}
+$\bm{A}$是由行向量组成的列向量，$\bm{B}$也是由行向量组成的列向量
+$$\bm{A B}=\left[\begin{array}{l}
+\bm{a}_{1}^{T} \\
+\bm{a}_{2}^{T}
+\end{array}\right]\left[\begin{array}{l}
+\bm{b}_{1}^{T} \\
+\bm{b}_{2}^{T}
+\end{array}\right]$$
+令$\bm{C = AB}$， 考虑$\bm{C}$的每一个行向量：
+$$\bm{c}_{1}^{T}=\bm{a}_{1}^{T} \bm{B}=\bm{a}_{1}^{T}\left(\begin{array}{l}\bm{b}_{1}^{T} \\ \bm{b}_{2}^{T}\end{array}\right)={a}_{11} \bm{b}_{1}^{T}+{a}_{12} \bm{b}_{2}^{T}$$
+同理：
+$$\bm{c}_{2}^{T}=a_{21} \bm{b}_{1}^{T} + a_{22} \bm{b}_{2}^{T}$$
+因此，矩阵$\bm{C}$的每一个行向量，是$\bm{B}$的行向量的一个线性组合，该线性组合中的系数是$\bm{a}^{T}_{i}$的各个元素。从这个角度说$\bm{C}$的每一个行向量都存在于$\bm{B}$的行向量空间内。
+
+\subsection{角度四：内积}
+
+$\bm{A}$是由列向量组成的行向量，$\bm{B}$是由行向量组成的列向量
+
+$$\bm{A B}=\left[\begin{array}{ll}\bm{a}_{1} & \bm{a}_{2}\end{array}\right]\left[\begin{array}{l}\bm{b}_{1}^{T} \\ \bm{b}_{2}^{T}\end{array}\right]$$
+按照内积定义有：
+$$\bm{A B}=\bm{a}_{1} \bm{b}_{1}^{T}+\bm{a}_{2} \bm{b}_{2}^{T}$$
+注意到$\bm{a}_{i} \bm{b}_{j}^{T}$是一个外积形式，结果为一个矩阵。因此$\bm{C}$是由各个外积矩阵相加得到的。
+
+\subsection{总结}
+
+$\bm{C=AB}$是一个矩阵
+\begin{itemize}
+    \item 既是列向量组成的行向量，每个列向量是$\bm{A}$的列空间的线性组合
+    \item 又是行向量组成的列向量，每个行向量是$\bm{B}$的行空间的线性组合
+    \item 既是一个\textbf{内积}，内积的每个成分是一个外积
+    \item 又是一个\textbf{外积}，外积矩阵的每一个元素是一个内积
+\end{itemize}
