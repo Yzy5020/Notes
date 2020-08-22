@@ -1,0 +1,42 @@
+    \section{Chapter1---vector and linear combination}
+    
+    scalar multiplication(标量乘法): 2\textbf{\textit{v}}
+    \quad
+    vector addition(矢量加法): \textbf{\textit{vw}}
+    \\
+    \textit{xy} plane(二维平面) \quad \textit{xyz} space(三维空间)
+     
+    $$
+    \textit{列向量v} =
+    \begin{bmatrix}
+        1 \\ 1 \\ -1  
+    \end{bmatrix}
+    \textit{转置(transpose)}\rightarrow
+    \textit{行向量v} = 
+    \begin{bmatrix}
+        1 & 1 & -1
+    \end{bmatrix}
+    $$
+
+    假设有三维向量\textbf{\textit{u,v,w}},系数$c,d,e$,在不考虑它们是零向量的情况下:
+    \begin{enumerate}
+            \item $c\bm{u}+d\bm{v}+e\bm{w}$ 覆盖整个三维空间
+            \item $c\bm{u}+d\bm{v}$ 覆盖三维空间中的某一个平面
+            \item $c\bm{u}$ 覆盖三维空间中的某一条直线
+    \end{enumerate}
+    故欲使$c\bm{u}+d\bm{v} = \bm{w}$ 有解，$\bm{w}$必须在$c\bm{u}+d\bm{v}$构成的平面上！
+    \\
+    整数 whole numbers \quad 等间距点 equally spaced points
+    \\
+    几何 geometric \quad lattice 点阵
+    \\
+    点积 dot product(内积 inner product): $\bm{v} \cdot \bm{w}$ 即为对应元素相乘再求和！
+    \\
+    长度$\Vert \bm{v} \Vert = \sqrt{\bm{v \cdot v}} = (v_{1}^{2}+v_{2}^{2}+\cdots+v_{n}^{2})^{1/2}$ 
+    \\
+    单位向量(unit vector) $\bm{u} = \frac{\bm{v}}{ \Vert \bm{v} \Vert}$ 且与$\bm{v}$同方向！ \\
+    \textbf{方阵:}
+    \begin{itemize}
+        \item 非奇异矩阵(可逆矩阵) nonsingular(invertible) matrix
+        \item 奇异矩阵(非可逆矩阵) singular matrix
+    \end{itemize}

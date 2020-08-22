@@ -1,0 +1,126 @@
+    \section{Chapter2---Solving Linear Equations}
+    \subsection{vectors and linear equations}
+    $\bm{A}_{m\times n}\bm{x}_{n \times 1}=\bm{b}$ 分别从行和列的角度来看
+    \begin{itemize}
+        \item 行：从m个方程n个未知数得到的“平面”是处于\textbf{n维空间}
+        \item 列：从n列且行数为m的列向量得到的线性组合是处于\textbf{m维空间}
+    \end{itemize}
+
+    \textbf{矩阵乘法}(行图像形式)：
+    $$
+    \begin{bmatrix}
+        2 & 0 \\
+        0 & 5
+    \end{bmatrix}
+    \begin{bmatrix}
+        row1 \\
+        row2
+    \end{bmatrix}
+    = 
+    \begin{bmatrix}
+        2*row1 + 0*row2 \\
+        0*row1 + 5*row2
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        2*row1 \\
+        5*row2
+    \end{bmatrix}
+    $$
+    $$
+    AB =
+    \begin{bmatrix}
+       \bm{a_1} \\ \bm{a_2} 
+    \end{bmatrix}
+    B = 
+    \begin{bmatrix}
+        \bm{a_1} \cdot B \\ \bm{a_2} \cdot B
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        a_{11} * \bm{b_1} + a_{12} * \bm{b_2} \\ a_{21} * \bm{b_1} + a_{22} * \bm{b_2}
+    \end{bmatrix}
+    $$
+    这里$\bm{a_i}$与$\bm{b_i}$均为行向量。\\
+    用这种乘法可以快速理解左乘置换矩阵$P_{ij}$为什么能改变行的顺序\\
+    $$
+    AB=A
+    \begin{bmatrix}
+        \bm{b_1} & \bm{b_2} & \bm{b_3}
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        A\bm{b_1} & A\bm{b_2} & A\bm{b_3}
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        \bm{a_1} \\ \bm{a_2} \\ \bm{a_3}
+    \end{bmatrix}
+    B=
+    \begin{bmatrix}
+        \bm{a_1}B \\ \bm{a_2}B \\ \bm{a_3}B
+    \end{bmatrix}
+    $$ 这里$\bm{b_i}$为列向量，$\bm{a_i}$为行向量。\\
+    \textbf{列图像形式}: 矩阵A乘矩阵B的\textbf{每列}，得到的结果AB的每一列都是\textbf{A的列的线性组合}。\\
+    \textbf{行图像形式}: 矩阵A的\textbf{每行}乘矩阵B，则AB的每一行均为\textbf{B的行的线性组合}
+    \textbf{列乘行形式}:
+    $$
+    \begin{bmatrix}
+        col1 & col2 & col3 \\ . & . & . \\ . & . & .
+    \end{bmatrix}
+    \begin{bmatrix}
+        row1 \cdots \\
+        row2 \cdots \\
+        row3 \cdots 
+    \end{bmatrix}
+    = (col1)(row1) + (col2)(row2) + (col3)(row3)
+    $$
+
+    \textbf{矩阵乘法在邻接矩阵中应用 2.4 worked example A} \\
+    adjacency matrix
+    $$
+    \bm{S} =
+    \begin{bmatrix}
+        0 & 1 & 1 & 0\\
+        1 & 0 & 1 & 1\\
+        1 & 1 & 0 & 1\\
+        0 & 1 & 1 & 0
+    \end{bmatrix}
+    $$
+    其中，$(S^2)_{ij}$表示结点i与结点j之间，步长为2的路径数目。\\
+    $(S^2)_{ij}=$(row $i$ of $S$)$\cdot$(column $j$ of $S$)$=s_{i1}s_{1j}+s_{i2}s_{2j}+s_{i3}s_{3j}+s_{i4}s_{4j}$
+
+    \subsection{矩阵的LU分解}
+    $(E_{32}E_{31}E_{21})A=U \rightarrow A = (E_{21}^{-1}E_{31}^{-1}E_{32}^{-1})U \rightarrow A=LU$
+    \\
+    $\bm{L, U}$分别是\textbf{下三角矩阵，上三角矩阵}。
+    \\
+    又因为
+    $$
+    U=
+    \begin{bmatrix}
+        d_1 & & &\\
+         & d_2 & &\\
+         &  & \ddots & \\
+         &  & & d_n
+    \end{bmatrix}
+    \begin{bmatrix}
+        1 & u_{12}/d_{1} & u_{13}/d_{1} & \cdot \\
+          & 1 & u_{23}/d_2 & \cdot \\
+          &   & \ddots & \vdots \\
+          &   &   & 1
+    \end{bmatrix}
+    $$
+    所以也可以写成$A=LDU$,$D$为主元对角矩阵，$U$主对角线为1。
+
+    \subsection{转置(transposes)与置换(permutations)}
+    \textbf{转置transpose}: $(A^T)_{ij} = A_{ij}$\\
+    若LU分解中的A是\textbf{对称的(symmetric)},则记为$S$,且分解过程可写成$A=LDU \rightarrow S=LDL^T$，其中$U=L^T$
+    \\
+    \textbf{置换permute以及置换矩阵permutation matrices P}\\
+    P即是对\textbf{单位矩阵I}进行\textbf{行变换或列变换}得到的矩阵。而不是只进行交换两行或两列的初等矩阵！\\
+    $P^{-1} = P^T$ 且 $PP^T = I$
+
+    \textbf{提前做行交换再进行分解PA=LU}\\
+    若A是可逆的，且A在消元过程中需要做行交换，则可以在分解之前利用P提前做行变换$\rightarrow PA$,
+    因此可以得到$PA=LU$

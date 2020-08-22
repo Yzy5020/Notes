@@ -1,0 +1,125 @@
+    \section{向量空间 Space of Vectors}
+    标准n维空间$R^n$可以理解为：$R \times R \times \dots \times R$,即n个R的笛卡尔积，即n维向量的所有可能情况！
+    \\
+    \textbf{向量空间}必须满足的规则：该空间对\textbf{数乘，加法}封闭，即通过这两种操作所产生的向量依然在此空间。
+    \\
+    注意：一个在三维空间中通过(0,0,0)的平面，是该三维空间的子空间，但不是$\bm{R^2}$。\\
+    \subsection{子空间subspaces}
+    同样对\textbf{数乘，加法}封闭，且\textbf{必须包含零向量}(当c=0时，数乘$c \bm{v}=\bm{0}$)
+    \\
+    关于$\bm{R^3}$的所有子空间：
+    \begin{itemize}
+        \item 所有过(0,0,0)的平面
+        \item 所有过(0,0,0)的直线
+        \item $\bm{Z}$原点，或零向量(0,0,0)
+        \item 整个空间$\bm{R^3}$
+    \end{itemize}
+    \subsection{列空间column space}
+    基于矩阵A的\textbf{列向量的所有线性组合}构成了列空间，这些组合是所有可能的$A\bm{x}$,它们填满了\textbf{列空间}$\bm{\mathcal{C}}(A)$。
+    \\
+    $A_{m\times n}$有n个列向量，每个列向量有m维。故，这些列向量属于$\bm{R^m}$空间。A的列空间是$\bm{R^m}(not \bm{R^n})$的\textbf{一个子空间}(满足子空间要求)！
+    \\
+    这一个概念至关重要，因为它\underline{将$A\bm{x}=\bm{b}$问题转化为$\bm{b}$是否能由$A$的列向量线性表出的问题}！
+    \\
+    方程组$A\bm{x}=\bm{b}$有解当且仅当向量$\bm{b}$处于$A$的列空间中！\\
+    $A, \quad [A \quad AB]$\textbf{有相同的列空间}，因为$AB$\textbf{实质也是A的列向量的线性组合}！
+    \\
+    \subsection{子空间的交、并、和}
+    \textbf{子空间的并}:$P\cup L$,如平面P和一条直线L之间，它们之间的并集对线性运算(加法)不封闭.所以子空间的并不是一个向量空间！
+    \\
+    \textbf{子空间的交}:$P\cap L$,平面P和直线L相交于原点，显然是$\bm{R^3}$的子空间。\\
+    \textbf{推广：}任意两个子空间的交集，仍是子空间！\\
+    \textbf{子空间的和：P+L}各取一条向量，相加之后的向量处于平面和直线之间！脱离了并集构成的空间.若两个子空间均为直线，则它们的和为一个过原点的平面。\textbf{子空间的加法不仅包含它们的并，也包含了它们的线性组合}。
+    例如：并就是集合的并集，而和是在并的基础之上把所有线性运算的结果都包含进去。比如x轴并y轴就是那两个轴，而它们的和得把空的地方都补上，是整个平面。
+    \\
+    $dim(S)+dim(U) = dim(S\cap U) + dim(S+U)$
+    \subsection{零空间Nullspaces}
+    零空间Nullspaces $\bm{N}(A)$, 行最简矩阵(reduced row echelon form) $R = \bm{rref}(A)$
+    ,$\bm{N}(A)=\bm{N}(R)$
+    \\
+    $A_{m\times n}\bm{x}=\bm{0}$的\textbf{所有解向量的线性组合}构成了零空间$\bm{N}(A)$, 因为解向量$\bm{x}$是n维的，所以该零空间是n维空间$\bm{R}^n$的一个\textbf{子空间}。
+    \\
+    $m>n$对方程组添加新的方程（行），会对解向量变得更加严格，原零空间不会变大！\\
+    $n>m$方程组至少有一个自由变量，即至少有一个非零解。\\
+    零空间是子空间，且它的\textbf{维度是自由变量的个数}(非主元pivot个数，即列数n减去主元个数)
+
+    \subsection{秩rank}
+    rank of A : 主元pivot数目，记为$r$。\quad 每个自由列都是主列的线性组合！
+    \begin{itemize}
+        \item A有r个线性无关列(行)
+        \item A的列空间(行空间)的维度是r
+        \item n-r是$A_{m\times n}\bm{x}=\bm{0}$的解空间的维度
+    \end{itemize}
+    这里说的\textbf{维度}$\rightarrow$构成向量空间的\textbf{基的线性无关向量的个数}！\\
+    \textbf{特殊的---秩为1的矩阵}\\
+    秩为1的矩阵可以写成(列向量乘行向量): $A=\bm{uv}^T$. \quad 如：
+    $$
+    \begin{bmatrix}
+        1 & 3 & 10\\
+        2 & 6 & 20\\
+        3 & 9 & 30
+    \end{bmatrix}
+    =
+    \begin{bmatrix}
+        1\\
+        2\\
+        3
+    \end{bmatrix}
+    \begin{bmatrix}
+        1 & 3 & 10
+    \end{bmatrix}
+    $$
+    $A\bm{x}=\bm{0}, \rightarrow \bm{u(v}^T\bm{x})=\bm{0} \rightarrow \bm{v}^T\bm{x}=\bm{0}$
+    可以看出，行(列)空间是一条直线，且解空间中所有的向量都要垂直于向量$\bm{v}^T$,故解空间是一个垂直于向量的平面$\bm{v}^T$。
+    \\
+    \textbf{A的按秩分解规律}\\
+    $A_{m\times n}, r(A)=r$，欲将A分解为$(m\times r)(r \times n)$的矩阵：\\
+    $A = (A \textbf{的主元列})(R的\textbf{前}r\textbf{行})=(COL)(ROW)$, R为A的行最简矩阵。把这个过程看成是\textbf{A的主元列的线性组合}，R前r行包含了单位阵I和自由变量列。
+
+    \subsection{线性相关性Independence，基Basis，维数Dimension}
+    一个空间的维度dimension是组成这个空间的基的线性无关的向量个数！$\mathbf{R}^{n}$的\textbf{维数是n, 且向量的维数也是n}\\
+    $\mathbf{C}(A)$--->$r$维；$\mathbf{N}(A)$--->$n-r$维。\\
+    \subsection{矩阵空间Matrix Spaces 5th P182}
+    一个向量空间M包含了所有2*2矩阵，它的维度是4！\quad 它的一个\textbf{基}为：
+    $A_{1}, A_{2}, A_{3}, A_{4}=\left[\begin{array}{ll}{1} & {0} \\ {0} & {0}\end{array}\right],\left[\begin{array}{ll}{0} & {1} \\ {0} & {0}\end{array}\right],\left[\begin{array}{ll}{0} & {0} \\ {1} & {0}\end{array}\right],\left[\begin{array}{ll}{0} & {0} \\ {0} & {1}\end{array}\right]$
+
+    \subsection{函数空间Function Spaces}
+    二阶微分方程$\frac{d^{2} y}{d x^{2}}+y=0$只考虑实数范围，有两个特解：$y=\sin x and y=\cos x$
+    \\
+    它的通解即为这两个特解的线性组合：$\mathrm{y}=c_{1} \cos \mathrm{x}+c_{2} \sin \mathrm{x}_{\circ}$
+    \\
+    这类似于零空间，将解看成空间中的元素，全部解构成解空间，满足线性运算封闭条件。\textbf{维数为2}\\
+    $y^{\prime \prime}=0$的解空间即类似零空间，为$y=c x+d$。\\
+    而$y^{\prime \prime}=2$不形成子空间，因为右边的2不是0，无法形成零空间。它的全部解为特解$y(x)=x^{2}$加上零空间$y=c x+d$
+    即为$y(x)=x^{2}+c x+d$。\\
+    \textbf{空间}$\bm{Z}$只包含零向量，它的维度为$\bm{0}$。空集empty set是$\bm{Z}$的一个基。
+    若将一个零向量加入到一个基中，则会\textbf{破坏基中的线性无关性}。\\
+
+    \subsection{四个基本子空间}
+    \begin{itemize}
+        \item \textbf{关联矩阵}incidence matrix 可以用来表示有向图，有环则说明结点代表的向量是\textbf{线性相关的},有树则\textbf{线性无关}
+        \item 列空间$\mathcal{C}(A)$，行空间$\mathcal{C}(A^T)$，零空间$\mathcal{N}(A)$，左零空间$\mathcal{C}(A^T)$
+    \end{itemize}
+    若求出了A的行阶梯或行最简矩阵R，再求出所用的行变换矩阵E，则可以通过E来求出左零空间的基，即$A^Tx=0$的解。
+    \\
+    $$\boldsymbol{E} \boldsymbol{A}=\boldsymbol{R}
+    =
+    \left[\begin{array}{rrr}{1} & {0} & {0} \\ {-1} & {1} & {0} \\ {-2} & {-2} & {1}\end{array}\right]
+    \left[\begin{array}{lll}{1} & {0} & {3} \\ {1} & {1} & {7} \\ {4} & {2} & {20}\end{array}\right]
+    =
+    \left[\begin{array}{lll}{1} & {0} & {3} \\ {0} & {1} & {4} \\ {0} & {0} & {0}\end{array}\right]
+    $$
+    因为$A^T$的列是$A$的行，所以可以从上面直接看出3-2=1，即解空间维数唯一。且R的第三行为零向量，由E的第三行乘上A的每行向量得到！
+    \\
+    所以有$A^T({row_3(E)}^T)=\textbf{0}$,\textbf{所以可以不用再求解一遍}$A^Tx=0$，\textbf{可以直接从E和R看出左零空间的基！}
+    \\
+    故有：若$\boldsymbol{E} \boldsymbol{A}=\boldsymbol{R}$, 则E的\textbf{后$\bm{m-r}$行}是$A$的左零空间的基！
+    \\
+    \textbf{注意}：AB的所有行都是B行的组合,因此AB的行空间包含在（可能等于）B的行空间中,所以rank（AB）<rank（B）。
+    AB的所有列是A的列的组合,因此AB的列空间包含在（可能等于）A的列空间中,所以rank（AB）<rank（A）。
+    \\
+    \textbf{若A,B的四个基本子空间都相同，则}$\bm{B=cA,c\neq 0}$
+    \subsection{每个秩r的矩阵=r个秩1矩阵之和}
+    对应上面矩阵$\boldsymbol{E} \boldsymbol{A}=\boldsymbol{R}$\\
+    $A=\left[\begin{array}{lll}{u_{1}} & {u_{2}} & {u_{3}}\end{array}\right]\left[\begin{array}{c}{v_{1}^{\mathrm{T}}} \\ {v_{2}^{\mathrm{T}}} \\ {\text { zero row }}\end{array}\right]=u_{1} v_{1}^{\mathrm{T}}+u_{2} v_{2}^{\mathrm{T}}=(\text { rank } 1)+(\text { rank } 1)$
+    A的主元列$\bm{u_1,u_2}$, R的前r行(主元行)$\bm{v_{1}^{T}, v_{2}^{T}}$.\\

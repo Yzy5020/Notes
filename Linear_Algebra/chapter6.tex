@@ -1,0 +1,270 @@
+    \section{特征值和特征向量Eigenvalues and Eigenvectors}
+    \subsection{特征值 Eigenvalues}
+    $A \boldsymbol{x}=\lambda \boldsymbol{x}$, 其中$\bm{x}$是特征向量，$\lambda$是特征值（可以为0，说明特征向量处于零空间中）！
+    \\
+    特征向量乘上A不改变方向，其他向量会改变方向。但是\textbf{其他向量可以用特征向量的线性组合来表示！}
+    \\
+    这里引入\textbf{马尔科夫矩阵Markov matrix}:它的每一列相加为1，最大特征值为1，对应特征向量处于一种稳定状态（当A乘上$A^{k}$时,A的所有列都会达到的一个稳定状态）\\
+    $A^{99}\left[\begin{array}{l}{.8} \\ {.2}\end{array}\right] \quad$ is really $\quad \boldsymbol{x}_{1}+(.2)\left(\frac{1}{2}\right)^{99} \boldsymbol{x}_{2}=\left[\begin{array}{l}{.6} \\ {.4}\end{array}\right]+\left[\begin{array}{l}{\text { very }} \\ {\text { small }} \\ {\text { vector }}\end{array}\right]$（这里将A的其中一列乘上$A^{99}$）
+    \subsubsection{特征值方程}
+    $A \boldsymbol{x}=\lambda \boldsymbol{x} \rightarrow (A-\lambda I) \bm{x}=\bm{0}$，也就是说特征向量$\bm{x}$构成了零空间，说明方程组必有非零解，即行列式为0。
+    \\
+    $\lambda$为特征值当且仅当$(A-\lambda I)$是奇异的（不可逆），即$\operatorname{det}(A-\lambda I)=0$。
+    \\
+    特征多项式(characteristic polynomial) $\operatorname{det}(A-\lambda I)$仅包含$\lambda$，当矩阵A是$n \times n$时，有n个特征值（可能重复）。
+    \\
+    计算过程省略。。。
+    \subsubsection{行列式和迹 determinant and trace}
+    \begin{itemize}
+        \item $det(A)=\lambda_{1}\lambda_{2}\dots\lambda_{n}$
+        \item $trace(A) = \lambda_{1}+\lambda_{2}+\cdots+\lambda_{n}=a_{11}+a_{22}+\cdots+a_{n n}$
+        \item 三角阵对角线上的元素即为它的特征值！
+    \end{itemize}
+    \textbf{上述前两条证明需要用到推广韦达定理，行列式展开式，具体证明见chrome收藏:mit线性代数}
+    \subsubsection{AB和A+B的特征值}
+    \textbf{错误证明}：$A B \boldsymbol{x}=A \beta \boldsymbol{x}=\beta A \boldsymbol{x}=\beta \lambda \boldsymbol{x}$，这是\textbf{因为特征向量$\bm{x}$不一定同时是A和B的特征向量！}
+    \\
+    \textbf{同理，A+B的特征值也不一定是$\lambda + \beta$}。上述情况只有在$\bm{x}$同时为A，B的特征向量时才成立！
+    \\
+    当且仅当$A B=B A$时，A,B同时共享相同的n个特征向量！\\
+    \textbf{对称矩阵的特征值为实数，反对称矩阵的特征值为虚数！}
+    \subsection{对角化, 相似}
+    \subsubsection{对角化Diagonalization}
+    若矩阵A有n个线性无关的特征向量，将它们放入特征向量矩阵$X$中，则有$X^{-1} A X=\Lambda=\left[\begin{array}{ccc}{\lambda_{1}} & {} & {} \\ {} & {\ddots} & {} \\ {} & {} & {\lambda_{n}}\end{array}\right]$，大写lambda $\Lambda$的对角线是特征值！
+    \\
+    解释$A X=X \Lambda$：$A X=A\Bigg[\begin{array}{lll}{x_{1}} & {\cdots} & {x_{n}}\end{array}\Bigg]=\Bigg[\begin{array}{lll}{\lambda_{1} x_{1}} & {\cdots} & {\lambda_{n} x_{n}}\end{array}\Bigg]$
+    $=\Bigg[\begin{array}{ccc}{x_{1}} & {\cdots} & {x_{n}}\end{array}\Bigg]\Bigg[\begin{array}{ccc}{\lambda_{1}} & {} \\ {} & {\ddots} & {} \\ {} & {} & {\lambda_{n}}\end{array}\Bigg]=X \Lambda$
+    \\
+    故$A X=X \Lambda \rightarrow X^{-1} A X=\Lambda \quad$ or $\quad A=X \Lambda X^{-1}$。$A$和$\Lambda$的特征值相同，特征向量不同！
+    \\
+    $A^{k}=\left(X \Lambda X^{-1}\right)\left(X \Lambda X^{-1}\right) \ldots\left(X \Lambda X^{-1}\right)=X \Lambda^{k} X^{-1}$
+    \\
+    只有当\textbf{A有n个线性无关的特征向量时，才能对角化}。P306(316)利用构造线性组合证明了不同特征值对应的特征向量线性无关！
+
+    \subsubsection{相似矩阵：相同特征值}
+    假设$\Lambda$不变，改变特征矩阵$X$，这样会得到所有能相似对角化成$\Lambda$。\\
+    \textbf{相似定义：存在可逆矩阵$B$，若$A=B C B^{-1}$，则称A与C相似（C不一定是对角阵）。}\\
+    事实上，若A，C\textbf{相似}，则它们一定\textbf{有相同的特征值}！\\
+    \textbf{Proof:}假设$C \boldsymbol{x}=\lambda \boldsymbol{x}$，则对于$A=B C B^{-1}$可以找到特征向量$B \boldsymbol{x}$使得：$\left(B C B^{-1}\right)(B \boldsymbol{x})=B C \boldsymbol{x}=B \lambda \boldsymbol{x}=\lambda(B \boldsymbol{x})$，即$A(B\bm{x})=\lambda (B\bm{x})$。
+
+    \subsubsection{若尔当型标准型 Jordan Form}
+    Jordan Block: $J_{i}=\left(\begin{array}{cccccc}{\lambda_{i}} & {1} & {} & {} & {} \\ {} & {\lambda_{i}} & {1} & {} & {} &{} \\ {} & {} & {\lambda_{i}} & {\ddots} & {}&{} \\ {} & {} & {} & {\ddots} & {1}&{} \\ {} & {} & {} &{} & {\lambda_{i}} & {1} \\ {}&{} & {} & {} & {} & {\lambda_{i}}\end{array}\right)_{r_{i}\times r_{i}}$，对角线上是重复的特征值，每个特征值上面有1，其余元素都是0.
+    \\
+    对于任一n阶复数矩阵A，都与一个若尔当型矩阵J相似，其中$J=\left[\begin{array}{cccc} J_{1} & & & \\ &J_{2} & & \\ & &  \ddots &\\  & & & J_{r_{i}}
+    \end{array}\right]$，且$1+2+\cdots +r_{i}=n$，每一个若尔当块对应一个特征向量，所以A的若尔当块数=特征向量数。（若有n个特征向量，n个分块，即$r_{i}=n$，则说明矩阵A可以对角化即$J=\Lambda$）
+    \\
+    \textbf{在不计Jordan块次序的前提下，A的Jordan标准型矩阵是唯一确定的}。
+    \\
+    Jordan Form 矩阵是指最接近对角阵但是又无法对角化的矩阵！比如$\begin{bmatrix}4 & 1 \\ 0 & 4\end{bmatrix}$ 它不可能对角化(因为$\Lambda = 4I$利用谱定理得到的总是$4I$)。\\
+    同样有两个不能对角化的矩阵，它们有相同特征值0，相同数量的特征向量：$\left[\begin{array}{lll|l}{0} & {1} & {0} & {0} \\ {0} & {0} & {0} & {0}\\{0}&{0} & {0} & {1} \\ \hline {0}&{0} & {0} & {0}\end{array}\right]$和$\left[\begin{array}{ll|ll}{0} & {1} & {0} & {0} \\ {0} & {0} & {1} & {0} \\ \hline {0}&{0} & {0} & {0} \\{0}&{0} & {0} & {0}\end{array}\right]$,\textbf{尽管它们特征值相同，但是由于它们的Jordan block分块不同，所以不相似！}
+
+
+    \subsubsection{Fibonacci Numbers}
+    斐波那契数列 $\quad 0,1,1,2,3,5,8,13, \ldots \quad$ 有递推式 $\quad F_{k+2}=F_{k+1}+F_{k}$，可以利用矩阵方程$\mathbf{u}_{k+1}=A \boldsymbol{u}_{k}$来快速计算。
+    \\
+    设$\bm{u}_{k}=\left[\begin{array}{c}{F_{k+1}} \\ {F_{k}}\end{array}\right] $\quad 递推式 $\begin{aligned} F_{k+2} &=F_{k+1}+F_{k} \\ F_{k+1} &=F_{k+1} \end{aligned}$ 可以表示为 $\bm{u}_{k+1}=\left[\begin{array}{cc}{1} & {1} \\ {1} & {0}\end{array}\right] \bm{u}_{k}$
+    \\
+    所以每求一步新的斐波那契数就乘上一个矩阵$A=\left[\begin{array}{ll}{1} & {1} \\ {1} & {0}\end{array}\right]$，\textbf{差分方程}$\bm{u}_{100} = A^{100} \bm{u}_0$ 即
+    $u_{0}=\left[\begin{array}{l}{1} \\ {0}\end{array}\right], \quad u_{1}=\left[\begin{array}{l}{1} \\ {1}\end{array}\right], \quad u_{2}=\left[\begin{array}{l}{2} \\ {1}\end{array}\right], \quad u_{3}=\left[\begin{array}{l}{3} \\ {2}\end{array}\right], \quad \ldots, \quad u_{100}=\left[\begin{array}{l}{F_{101}} \\ {F_{100}}\end{array}\right]$
+    \\
+    为了简化矩阵乘法，使其能快速求解，\textbf{利用A的特征值：}\\
+    $A-\lambda I=\left[\begin{array}{cc}{1-\lambda} & {1} \\ {1} & {-\lambda}\end{array}\right] \rightarrow det(A-\lambda I)=\lambda^{2}-\lambda-1=0 \rightarrow$\\
+    $Eigenvalues: \lambda_1 = \frac{1+\sqrt{5}}{2} \approx 1.618 \quad \lambda_2 = \frac{1-\sqrt{5}}{2} \approx -0.618$\\
+    $Eigenvectors: \bm{x}_1 = (\lambda_1,1)\quad \bm{x}_2 = (\lambda_2,1)$
+    然后将$\bm{u}_0$\textbf{表示为两个特征向量的线性组合}：$\bm{u}_0 =\frac{\bm{x}_1-\bm{x}_2}{\lambda_1 - \lambda_2} \rightarrow \left[\begin{array}{c} 1 \\ 0 \end{array}\right]= \frac{1}{\lambda_1 - \lambda_2}\left(\left[\begin{array}{c} \lambda_1 \\ 1 \end{array}\right]- \left[\begin{array}{c} \lambda_2 \\ 1 \end{array}\right]\right)$
+    \\
+    再计算$\bm{u}_{100} = A^{100} \bm{u}_0$，即将$\bm{u}_0$乘上$A^{100}$，就有：$\bm{u}_{100}= \frac{(\lambda_1)^{100}\bm{x}_1 - (\lambda_2)^{100}\bm{x}_2}{\lambda_1 - \lambda_2}$。而且$\lambda_2^{100} \approx 0$，所以第100个数为$\frac{\lambda_1^{100} - \lambda_2^{100}}{\lambda_1 - \lambda_2}$近似于$\frac{1}{\sqrt{5}}\left(\frac{1+\sqrt{5}}{2}\right)^{100}$。
+    \\
+    每个$F_k$都是整数，且比例$F_101 / F_100$是非常接近$\frac{1+\sqrt{5}}{2}$的。
+
+    \subsubsection{矩阵的幂}
+    矩阵的对角化分解非常适合用来计算矩阵的幂，例如上一小节的差分方程:$\bm{u}_{100} = A^{100} \bm{u}_0$中，$A^{k}\bm{u}_0=(X\Lambda X^{-1})\cdots (X\Lambda X^{-1})\bm{u}_0=(X\Lambda^{k} X^{-1})\bm{u}_0$。
+    \\
+    下面分步解释特征值在其中是如何起作用的(详细说明P310(320))：
+    \begin{enumerate}
+        \item 写成线性组合用特征向量表出$\bm{u}_0 = c_1\bm{x}_1 + \cdots + c_n\bm{x}_n, \quad  \bm{u}_0= X \bm{c}_{n\times 1} \quad \bm{c}_{n\times 1}= X^{-1}\bm{u}_0$
+        \item 每个特征向量$\bm{x}_i$乘上$(\lambda_i)^k$，即有$\Lambda^k X^{-1}\bm{u}_0$
+        \item 在乘上$X$得到$c_i (\lambda_i)^k\bm{x}_i$，全部加起来便是$X\Lambda^{k} X^{-1}\bm{u}_0$
+    \end{enumerate}
+    所以最终解的形式：$\bm{u}_k =c_1 (\lambda_1)^k\bm{x}_1+\cdots +c_n (\lambda_n)^k\bm{x}_n =\sum{ c_i (\lambda_i)^k\bm{x}_i}$。
+
+    \subsubsection{不可对角化的矩阵Nondiagonalizable Matrices}
+    也就是有重复的特征值$\lambda$，但是对应$\lambda$的\textbf{特征向量个数GM不等于特征值重复的次数AM！}
+
+    欧拉公式Euler's formula: $e^{i\theta} = cos\theta + isin\theta$
+    \begin{itemize}
+        \item A,B均为方阵时，AB,BA有相同特征值值
+        \item 当$A_{m\times n}, B_{n\times m}$时，AB，BA有相同的非零特征值
+    \end{itemize}
+    证明见百度(利用特征值公式)～
+
+    \subsection{微分方程组Systems of Differential Equations}
+    A的相似对角化不仅适用于计算$A^k$，也适用于计算微分方程$d\bm{u}/dt = A\bm{u}$。此章节主要是：\textbf{将线性常系数微分方程转换为线性代数！}
+    \\
+    \textbf{普通微分方程}$\frac{du}{dt} = u \rightarrow u(t)=\bm{Ce^t}, \quad \frac{du}{dt} = \lambda u \rightarrow u(t)=\bm{Ce^{\lambda t}}$，当time t=0时，有$u(0)=c$，说明了解的系数$\bm{C}$。
+    \\
+    但以上只是从一个方程出发，\textbf{若有多个微分方程联立共同确定几个具有同一自变量的函数，这构成了微分方程组（耦合），它的解是关于共同自变量的函数。未知数(函数)可以写成向量}，从给定的初始条件$\bm{u(0)}$开始。
+    \\
+    \textbf{例如}：$\left\{\begin{array}{l} \frac{du_1}{dt}=-u_1+2u_2 \\ \frac{du_2}{dt}=u_1-2u_2 \end{array}\right.$ 写成向量形式：$\dfrac{d}{dt} \begin{bmatrix}u_1 \\ u_2 \end{bmatrix}=\begin{bmatrix}-1 & 2 \\ 1 & -2 \end{bmatrix}\begin{bmatrix}u_1 \\ u_2 \end{bmatrix} \rightarrow \dfrac{d\bm{u}}{dt}=A\bm{u}$
+    \\
+    即$\frac{d\bm{u}}{dt}= \bm{u}$从向量$\bm{u}(0)=\begin{bmatrix} u_{1}(0) \\ \cdots \\ u_{n}(0) \end{bmatrix}$开始！
+    利用$A \boldsymbol{x}=\lambda \boldsymbol{x}$找到纯指数解$e^{\lambda t} \bm{x}$。
+
+    \subsubsection{$d \boldsymbol{u} / d t=A \boldsymbol{u}$的解}
+    纯指数解为$\boldsymbol{u}(t)=e^{\lambda t} \boldsymbol{x}$，其中$\lambda$是A的特征值，$\bm{x}$是A的特征向量。$\frac{d \boldsymbol{u}}{d t}=\lambda e^{\lambda t} \boldsymbol{x}$与$A \boldsymbol{u}=A e^{\lambda t} \boldsymbol{x}$一致。
+    \\
+    求解过程：
+    \begin{enumerate}
+        \item 将初始状态$\boldsymbol{u}(0)$表示为A特征向量的线性组合$c_{1} \boldsymbol{x}_{1}+\cdots+c_{n} \boldsymbol{x}_{n}$(需要A能相似对角化，即有n个线性无关的特征向量)
+        \item 对每个特征向量$\boldsymbol{x}_{i}$乘上对应的$e^{\lambda_{i} t}$
+        \item 所以微分方程组$\dfrac{d \bm{u}}{d t}=A \bm{u}$的通解为：$\bm{u}(t)=c_{1} e^{\lambda_{1} t} \bm{x}_{1}+\cdots+c_{n} e^{\lambda_{n} t} \bm{x}_{n}$
+    \end{enumerate}
+    若A有重复特征值且GM！=AM，即特征向量个数不等于重复数，则通解中会包含$t e^{\lambda t} \boldsymbol{x}$。
+
+    \subsubsection{二阶微分方程的解}
+    高数中：$m \frac{d^{2} y}{d t^{2}}+b \frac{d y}{d t}+k y=0 \quad$ becomes $\quad\left(m \lambda^{2}+b \lambda+k\right) e^{\lambda t}=0$，且利用$y=e^{\lambda t}$来解微分方程，即$y_{1}=e^{\lambda_{1} t}$ and $y_{2}=e^{\lambda_{2} t}$。($\lambda_1 \lambda_2 $是特征方程的两个根！)
+    \\
+    线代中：利用特征值和特征矩阵来解方程，先对该二阶微分方程$m \frac{d^{2} y}{d t^{2}}+b \frac{d y}{d t}+k y=0$构造方程组,设$m=1$(不设也没关系),$\boldsymbol{u}=\left(y, y^{\prime}\right)$\textbf{降阶处理}：
+    \begin{enumerate}
+        \item $\left\{\begin{array}{l}{d y / d t=y^{\prime}} \\ {d y^{\prime} / d t=-k y-b y^{\prime}}\end{array}\right. \rightarrow \dfrac{d}{d t}\left[\begin{array}{l}{y} \\ {y^{\prime}}\end{array}\right]=\left[\begin{array}{rr}{\mathbf{0}} & {\mathbf{1}} \\ {-\boldsymbol{k}} & {-\boldsymbol{b}}\end{array}\right]\left[\begin{array}{l}{y} \\ {y^{\prime}}\end{array}\right]=A \boldsymbol{u}$，第一个式子是不必要的（为了构建矩阵），第二个式子把$y^{\prime \prime}$连接到$y^{\prime}$和$y$，所以宏观看来这是$\boldsymbol{u}^{\prime}$ 转为 $\boldsymbol{u}$。
+        \item $A-\lambda I=\left[\begin{array}{cc}{-\lambda} & {1} \\ {-k} & {-b-\lambda}\end{array}\right]$有行列式$\lambda^{2}+b \lambda+k=0$，这与高数中的一致！求出特征值$\lambda_1, \lambda_2$ 特征向量$\boldsymbol{x}_{1}=\left[\begin{array}{l}{1} \\ {\lambda_{1}}\end{array}\right]$\quad $\boldsymbol{x}_{2}=\left[\begin{array}{c}{1} \\ {\lambda_{2}}\end{array}\right]$
+        \item 得到方程组通解：$u(t)=c_{1} e^{\lambda_{1} t}\left[\begin{array}{c}{1} \\ {\lambda_{1}}\end{array}\right]+c_{2} e^{\lambda_{2} t}\left[\begin{array}{c}{1} \\ {\lambda_{2}}\end{array}\right]$
+        \item 方程组通解第一个元素：$y=c_{1} e^{\lambda_{1} t}+c_{2} e^{\lambda_{2} t}$就是该二阶微分方程的通解。
+        \item 第二个元素便是$d y / d t$。
+    \end{enumerate}
+    \textbf{求解3阶...n阶微分方程同理, 仿照上述方法构造矩阵即可。}
+
+    \subsubsection{2×2矩阵的稳定性}
+    微分方程$d \boldsymbol{u} / d t=A \boldsymbol{u}$的通解$\bm{u}(t)$，当$t \rightarrow \infty$时，通解是趋于0？
+    通解$\bm{u}(t)$是从$e^{\lambda t} \boldsymbol{x}$得来的，所以：
+    \begin{itemize}
+        \item 若特征值$\lambda$是实数，则$\lambda < 0$才有$e^{\lambda t} \rightarrow 0$
+        \item 若特征值$\lambda$是复数，则$\lambda=r+i s$的实部$r <0$才有$e^{\lambda t} \rightarrow 0$。\\注意：$e^{\lambda t}$分解成$e^{r t} e^{i s t}$，因为$e^{i s t}=\cos s t+i \sin s t$(欧拉公式)有$\quad\left|e^{i s t}\right|^{2}=\cos ^{2} s t+\sin ^{2} s t=1$，所以$e^{i s t}$固定为1，不影响解的值！
+    \end{itemize}
+    对于2×2矩阵来说，A所有特征值实部均为负数方程的解才会趋于稳定，可以用矩阵的迹trace(A)<0和行列式det(A)>0来判断。
+
+    \subsubsection{解耦与矩阵指数 uncouple and exponential of a matrix}
+    一般来说，微分方程组中各个同自变量的函数（即未知数）是耦合的，利用A的特征值和特征向量进行\textbf{对角化}就可以进行\textbf{解耦}。
+    \\
+    首先定义\textbf{矩阵指数$e^{A t}$}, 把指数展开成幂级数的方式，\textbf{当指数是矩阵时也一样}！(特征向量矩阵$X$，且$A=X\Lambda X^{-1}$):
+    \begin{enumerate}
+        \item 幂级数公式：$e^{\mathrm{x}}=1+\mathrm{x}+\dfrac{x^{2}}{2}+\dfrac{x^{3}}{6}+ \dots +\dfrac{x^{n}}{\mathrm{n} !}\cdots$ \quad (收敛域为全体实数)
+        \item 扩展到矩阵计算中，I代替1，矩阵代替x ：\\
+        $e^{A t}=I+A t+\dfrac{(A t)^{2}}{2}+\dfrac{(A t)^{3}}{6}+\dots \cdots \cdots+\dfrac{(A t)^{n}}{n !}+\cdots \cdots$
+        \item 对角化A：$e^{A t}=I+X \Lambda X^{-1} t+\frac{1}{2}\left(X \Lambda X^{-1} t\right)\left(X \Lambda X^{-1} t\right)+\cdots$\\
+        $=X\left[I+\Lambda t+\frac{1}{2}(\Lambda t)^{2}+\cdots\right] X^{-1}$
+        \item 对比e的幂级数展开式可知：$e^{A t}=X e^{\Lambda t} X^{-1}$
+    \end{enumerate}
+    \textbf{矩阵分析中有证明矩阵的泰勒展开式与函数的泰勒展开式的形式一样！}\\
+    $\Lambda=\left[\begin{array}{ccc}{\lambda_{1}} & {} & {} \\ {} & {\ddots} & {} \\ {} & {} & {\lambda_{n}}\end{array}\right]$ \quad
+    $e^{\Lambda t} = \left[\begin{array}{ccc}{e^{\lambda_{1} t}} & {} & {} \\ {} & {\ddots} & {} \\ {} & {} & {e^{\lambda_{n} t}}\end{array}\right]$
+    \\
+    \textbf{解耦:}在之前的$\dfrac{d\bm{u}}{dt}=A\bm{u}$中，有$u_1, u_2$耦合,
+    \begin{enumerate}
+        \item 设$\bm{u}=X\bm{v}$, $\dfrac{{d} \bm{u}}{dt}={S} \dfrac{{d} \bm{v}}{{dt}}=A\bm{u}=AX\bm{v}$
+        \item 提取出${S} \dfrac{{d} \bm{v}}{{dt}}=AX\bm{v}$，左右两边同时乘上$X^{-1}$得到：\\
+        $\dfrac{{d} \bm{v}}{{dt}}=X^{-1}AX\bm{v} = \Lambda v$
+        \item 由此得到关于$\bm{v}$的对角化方程组，不耦合---$\dfrac{\mathrm{d} v_{1}}{\mathrm{dt}}=\lambda_{1} v_{1}, \dfrac{\mathrm{d} v_{2}}{\mathrm{dt}}=\lambda_{2} v_{2}$
+        \item 最终有：$\bm{v}(\mathrm{t})=e^{\Lambda \mathrm{t}} \bm{v}(0)$且$\bm{u}(t)=e^{A t} \bm{u}(0)=\mathrm{Xe}^{\Lambda \mathrm{t}} X^{-1} \bm{u}(0)$
+    \end{enumerate}
+    $e^{A t} \bm{u}(0)=X e^{\Lambda t} X^{-1} \bm{u}(0)=\left[\begin{array}{ccc}{\bm{x}_{1}} & {\cdots} & {\bm{x}_{n}}\end{array}\right]\left[\begin{array}{ccc}{e^{\lambda_{1} t}} & {} & {} \\ {} & {\ddots} & {} \\ {} & {} & {e^{\lambda_{n} t}}\end{array}\right]\left[\begin{array}{c}{c_{1}} \\ {\vdots} \\ {c_{n}}\end{array}\right]$
+    \\
+    $\boldsymbol{u}(0)=c_{1} \boldsymbol{x}_{1}+\cdots+c_{n} \boldsymbol{x}_{n}=X \boldsymbol{c}$，\quad
+    故它与之前提到的解微分方程组三步解法得到的\textbf{通解}$\boldsymbol{u}(t)=\boldsymbol{c}_{1} e^{\boldsymbol{\lambda}_{1} \boldsymbol{t}} \boldsymbol{x}_{1}+\cdots+\boldsymbol{c}_{\boldsymbol{n}} \boldsymbol{e}^{\boldsymbol{\lambda}_{\boldsymbol{n}} \boldsymbol{t}} \boldsymbol{x}_{\boldsymbol{n}}$\textbf{是一样的}！
+    \\
+    \textbf{{P327(337) example4}}解释了\textbf{为什么在解一个二阶微分方程式会出现： $e^{t}$ 和 $t e^{t}$}，其核心在于A有重复特征值且特征向量数目不够，则$e^{A t}=e^{I t} e^{(A-I) t}=e^{t}[I+(A-I) t]$($e^{(A-I) t}$的幂级数展开式是收敛的，因为$(A-I)^{2}$是零矩阵)\\
+    $\left[\begin{array}{l}{y} \\ {y^{\prime}}\end{array}\right]=e^{t}\left[I+\left[\begin{array}{cc}{-1} & {1} \\ {-1} & {1}\end{array}\right] t\right]\left[\begin{array}{c}{y(0)} \\ {y^{\prime}(0)}\end{array}\right]$, $y(t)=e^{t} y(0)-t e^{t} y(0)+t e^{t} y^{\prime}(0)$
+    \\
+    \textbf{Problem Set 26证明了$e^{At}$为什么是可逆的！(所有特征值$e^{\lambda t}>0$)}\\
+
+    \subsection{对称阵 symmetric matrices}
+    key fact:
+    \begin{itemize}
+        \item 一个实对称阵只有实特征值
+        \item 特征向量可以选择变成规范正交的(orthonormal)(通过单位化), $X$的每个列向量都是规范正交的话，则$X$变成了正交矩阵(orthogonal)$Q$,有$Q^{-1}=Q^{T}$
+        \item 实对称阵均可对角化
+    \end{itemize}
+    \textbf{谱定理 Spectral Theorem:}每个对称阵都有分解：$S=Q \Lambda Q^{-1}=Q \Lambda Q^{\mathrm{T}} \quad$ with $\quad Q^{-1}=Q^{\mathrm{T}}$， $\Lambda$是实特征值，$Q$是正交矩阵。
+    \\
+    还证明了为什么实对称阵的特征值也是实数？为什么实对称阵的特征向量正交？\\
+    $S=Q \Lambda Q^{\mathrm{T}}=\left[\begin{array}{ll}{\boldsymbol{q}_{1}} & {\boldsymbol{q}_{2}}\end{array}\right]\left[\begin{array}{ll}{\lambda_{1}} & {} \\ {} & {\lambda_{2}}\end{array}\right]\left[\begin{array}{l}{\boldsymbol{q}_{1}^{\mathrm{T}}} \\ {\boldsymbol{q}_{2}^{\mathrm{T}}}\end{array}\right]$\\
+    $S=Q \Lambda Q^{\mathrm{T}}=\lambda_{1} q_{1} q_{1}^{\mathrm{T}}+\cdots+\lambda_{n} q_{n} q_{n}^{\mathrm{T}}$, 利用特征向量的规范正交性有：$S \boldsymbol{q}_{i}=\left(\lambda_{1} \boldsymbol{q}_{1} \boldsymbol{q}_{1}^{\mathrm{T}}+\cdots+\lambda_{n} \boldsymbol{q}_{n} \boldsymbol{q}_{n}^{\mathrm{T}}\right) \boldsymbol{q}_{i}=\lambda_{i} \boldsymbol{q}_{i}$
+
+    \subsubsection{实对称阵的复特征值}
+    对于任意实对称阵：$S x=\lambda x \rightarrow S \overline{x}=\overline{\lambda} \overline{x}$，若是实对称阵则前两式相同，若是非对称阵则可有复特征值、复特征向量则前两式不同。
+    \\
+    对于实数阵，复数的特征值和特征向量都是共轭对，$\lambda=a+i b$\quad $\overline{\lambda}=a-i b$，If $A \boldsymbol{x}=\lambda \boldsymbol{x} \quad$ then $\quad A \overline{\boldsymbol{x}}=\overline{\lambda} \overline{\boldsymbol{x}}$
+
+    \subsubsection{特征值 vs 主元(行阶梯)}
+    对于\textbf{对称阵}来说，\textbf{正特征值的数目=正主元数目}(也有特征值乘积=det(S)= 主元乘积)\\
+    举例证明：
+    $S = \left[\begin{array}{ll}{1} & {3} \\ {3} & {1}\end{array}\right]$, 进行LU分解$\rightarrow S=LU=L D L^{\mathrm{T}}=$$\left[\begin{array}{ll}{1} & {3} \\ {3} & {1}\end{array}\right]=\left[\begin{array}{ll}{1} & {0} \\ {3} & {1}\end{array}\right]\left[\begin{array}{ll}{1} \\ {} & {-8}\end{array}\right]\left[\begin{array}{ll}{1} & {3} \\ {0} & {1}\end{array}\right]$
+    \\
+    S的特征值为4，-2。当$L \rightarrow I$时，$S \rightarrow D$即$D = IDI^{T}$且特征值为1和-8，这便是S的主元pivot。
+    \\
+    因为S在往D转变的过程中，特征值没有越过0，所以特征值的符号一直没有改变！故\textbf{特征值的符号与主元符号相同！}
+
+    \subsubsection{所有对称阵均可对角化}
+    主要说明的是当出现重复特征值时，有没有对应数量的线性无关的特征向量来保证可对角化性？对称阵可以！
+    \\
+    利用\textbf{舒尔定理(Schur's Theorem)}：任意方阵$A=Q T Q^{-1}$且$T$是上三角型，$Q$是正交矩阵，$\overline{Q}^{\mathrm{T}}=Q^{-1}$，所以$T=Q^{\mathrm{T}} S Q$，当$S^{\mathrm{T}}=S$时，上三角型T是对称的，故T一定是对角阵$\Lambda$。
+    \\
+    舒尔定理书里未证明！\\
+    \textbf{惯性定理Law of Inertia:}\quad $S$与$A^{\mathrm{T}} S A$一致(A为方阵且可逆)，且它们对应正，负，零特征值数量相同！
+
+    \subsection{正定矩阵 Positive Definite Matrices}
+    \textbf{正定矩阵:}对称阵，且所有特征值$\lambda >0$。\\
+    正定，半定，负定
+    正定矩阵的判别\textbf{两种}方法：
+    \begin{itemize}
+        \item 矩阵左上行列式从$1\times 1 \rightarrow n\times n$均大于0
+        \item 矩阵的所有主元(行阶梯)均大于0
+    \end{itemize}
+    \subsubsection{基于能量的定义 energy-based definition}
+    $S \boldsymbol{x}=\lambda \boldsymbol{x}, \lambda >0$, $\boldsymbol{x}^{\mathrm{T}} \boldsymbol{x}=\|\boldsymbol{x}\|^{2}$, 所以$\boldsymbol{x}^{\mathrm{T}} S \boldsymbol{x}=\lambda \boldsymbol{x}^{\mathrm{T}} \boldsymbol{x}$\textbf{对任何非零向量x都是大于0！}
+    \\
+    而数$x^{\mathrm{T}} S x$在系统中称为能量, 如此便定义了正定矩阵！即对任意非零向量$\bm{x}\neq 0$有$\bm{x}^{\mathrm{T}} S \bm{x}>0$, 则S是正定的！
+    \\
+    若S，T是正定的，则S+T也是正定的。\\
+    $S=A^{T}A$是方阵且对称(A任意形状)，若A列向量线性无关,则S是正定的！\\
+    \textbf{证明：}$\bm{x}^{\mathrm{T}} S \bm{x}= \boldsymbol{x}^{\mathrm{T}} A^{\mathrm{T}} A \bm{x} =(A \boldsymbol{x})^{\mathrm{T}}(A \boldsymbol{x})=\|A \boldsymbol{x}\|^{2}$。
+    A的列线性无关保证了当$\bm{x} \neq 0$时$A \boldsymbol{x}$不为0。\\
+    \textbf{Cholesky factorization:} 对称阵$S=LU=LDL^{T}=L\sqrt{D} \sqrt{D}L^{T}=L\sqrt{D} (L \sqrt{D})^{T}=A^{T}A $, 且A的列向量线性无关！
+
+    \subsubsection{正半定矩阵Positive Semidefinite Matrices}
+    正半定矩阵的所有$\lambda \geq 0$,最小的特征值为0，且对任意非零向量$\bm{x}$有$\boldsymbol{x}^{\mathrm{T}} S \boldsymbol{x} \geq 0$。该矩阵进行$A^{T}A$分解后，A的列向量总是线性相关！
+
+    \subsubsection{椭圆The Ellipse $a x^{2}+2 b x y+c y^{2}=1$}
+    这里设S是$2\times 2$的对称阵，且正定\\
+    $\boldsymbol{x}^{\mathrm{T}} S \boldsymbol{x}=\left[\begin{array}{ll}{x} & {y}\end{array}\right]\left[\begin{array}{ll}{a} & {b} \\ {b} & {c}\end{array}\right]\left[\begin{array}{l}{x} \\ {y}\end{array}\right]=a x^{2}+2 b x y+c y^{2}=1$
+    是一个斜椭圆。若要使其与坐标轴X，Y对齐，则应利用主轴定理(principal axis theorem)$S=Q \Lambda Q^{\mathrm{T}}$来生成对齐的椭圆！\\
+    $\boldsymbol{x}^{\mathrm{T}} S \boldsymbol{x} = \boldsymbol{x}^{\mathrm{T}}Q \Lambda Q^{\mathrm{T}}\boldsymbol{x}= (Q^{\mathrm{T}}\boldsymbol{x})^{T}\Lambda Q^{\mathrm{T}}\boldsymbol{x}=\boldsymbol{X}^{\mathrm{T}} \Lambda \boldsymbol{X}=1$\\
+    原S中倾斜椭圆的轴沿着S的特征向量，变换后椭圆的轴沿着$\Lambda$的特征向量！长短轴的端点由特征值给出。
+    \\
+    椭圆$\left[\begin{array}{ll}{x} & {y}\end{array}\right] Q \Lambda Q^{\mathrm{T}}\left[\begin{array}{l}{x} \\ {y}\end{array}\right]=\left[\begin{array}{ll}{X} & {Y}\end{array}\right] \Lambda\left[\begin{array}{l}{X} \\ {Y}\end{array}\right]=\lambda_{1} X^{2}+\lambda_{2} Y^{2}=1$
+    \\
+    若S有特征值为负，则$\boldsymbol{x}^{\mathrm{T}} S \boldsymbol{x}=1$变成一个双曲线。\\
+    若S是$n \times n$的，则$\boldsymbol{x}^{\mathrm{T}} S \boldsymbol{x}=1$是$\mathbf{R}^{n}$中的“椭球体”！
+    
+    \subsubsection{具体应用：求二元函数的无条件极值}
+    高数中可知无条件极值有判别法：$AC-B^{2}$, A,C,B分别对应F对x,F对y，F对xy(yx)的二阶导。\\
+    转为矩阵$S=\left[\begin{array}{ll}{\partial^{2} F / \partial x^{2}} & {\partial^{2} F / \partial x \partial y} \\ {\partial^{2} F / \partial y \partial x} & {\partial^{2} F / \partial y^{2}}\end{array}\right]$
+    \\
+    则上述判别公式可以转述为：\textbf{若S是正定的且$\partial \boldsymbol{F} / \partial \boldsymbol{x}=\partial \boldsymbol{F} / \partial \boldsymbol{y}=\mathbf{0}$}，则$F(x,y)$有最小值。
+    \\
+    \textbf{若是三元函数的极小值：}
+    先有$\frac{\partial F}{\partial x}=\frac{\partial F}{\partial y}=\frac{\partial F}{\partial z}=0$成立\\
+    再有$S=\left[\begin{array}{ccc}{F_{x x}} & {F_{x y}} & {F_{x z}} \\ {F_{y x}} & {F_{y y}} & {F_{y z}} \\ {F_{z x}} & {F_{z y}} & {F_{z z}}\end{array}\right]$是正定的！
+    
+    \subsubsection{problem set}
+    1. 当S,T均为正定矩阵，ST未必是对称的，但是ST的特征值依然是正的！证明：广义特征值问题：$K \boldsymbol{x}=\lambda M \boldsymbol{x}$有$S T=M^{-1} K$，则$S T \boldsymbol{x}=\lambda \boldsymbol{x} \rightarrow (T \boldsymbol{x})^{\mathrm{T}} S T \boldsymbol{x}=(T \boldsymbol{x})^{\mathrm{T}} \lambda x .$ Then $\lambda=\boldsymbol{x}^{\mathrm{T}} T^{\mathrm{T}} S T \boldsymbol{x} / \boldsymbol{x}^{\mathrm{T}} T \boldsymbol{x}>0$。（利用了S，T的正定性）
+    
+    \subsection{更正：傅里叶级数fourier series与函数空间的内积---在10.5中}
+    假设一个n维空间的一组完整基是n个标准正交向量$\bm{q}_{1}, \bm{q}_{2}, \dots ,\bm{q}_{n}$，那么在此空间中任意向量$\bm{v}$可以由这组基线性表示：$\bm{v}=\bm{x}_{1} \bm{q}_{1}+\bm{x}_{2} \bm{q}_{2}+\ldots +\bm{x}_{n} \bm{q}_{n}$。\\
+    矩阵化：$Q \bm{x}=\bm{v} \rightarrow \bm{x}=Q^{-1} \bm{v}$，因为$Q^{T}=Q^{-1}$，所以$\bm{x}=Q^{-1} \bm{v}=Q^{T} \bm{v}$，所以向量$\bm{v}$的各个分量为$x_{i} = \bm{q}_{i}^{T} \bm{v}$(行乘列)。\\
+    \textbf{函数正交}\\
+    对比向量内积的形式，因为函数在其定义域是连续的，对应两个连续函数而言，\textbf{函数内积}就是在其定义域[a,b]上对$f(x) \cdot g(x)$的积分：$ \int_{a}^{b}f(x) \cdot g(x)dx$记作函数的内积！若函数内积为零则称这两个函数在定义域上\textbf{正交}！\\
+    \textbf{fourier级数}:$f(x)=a_{0}+a_{1} \cos x+b_{1} \sin x+a_{2} \cos 2 x+b_{2} \sin 2 x+\ldots$,作用在函数空间上，$f(x)$相当于上述的向量$\bm{v}$，再有\textbf{标准正交基}$1, \cos x, \sin x, \cos 2 x, \sin 2 x \ldots$代替$\boldsymbol{q}_{1}, \boldsymbol{q}_{2}, \dots, \boldsymbol{q}_{n}$
+    \\
+    所以系数$a_{0}, a_{1}, b_{1} \dots \dots$对应向量$\bm{v}$中的分量$x_{1}, x_{2}, \dots$！\\
+    求解系数a1: 仿照求解向量分量，将向量与对应的正交基做内积！这里将$f(x)$与$\cos x$做内积：$\int_{0}^{2 \pi} f(x) \cos x d x=\int_{0}^{2 \pi}\left(a_{0}+a_{1} \cos x+b_{1} \sin x+a_{2} \cos 2 x+b_{2} \sin 2 x\right) \cos x d x$， 因为$\int_{0}^{2 \pi} a_{1} \cos x^{2} d x=a_{1} \pi$，所以$a_{1}=\frac{\int_{0}^{2 \pi} f(x) \cos x d x}{\pi}$。

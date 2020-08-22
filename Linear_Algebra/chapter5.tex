@@ -1,0 +1,46 @@
+    \section{行列式(方阵) Determinants}
+    \subsection{性质properties}
+    \begin{itemize}
+        \item A可逆，则$\bm{det}(A) \neq 0$
+        \item $det(A^{-1})$ = 1$/(\operatorname{det} A)$
+    \end{itemize}
+    反对称矩阵skew-symmetric matrix $A^{\mathrm{T}}=-A$
+    \subsection{排列和代数余子式Permutations and Cofactors}
+    \textbf{求行列式的三种方法}
+    \begin{itemize}
+        \item 消元法 Pivot formula 将矩阵化为三角矩阵，即进行LU分解。
+        \item 逆序数法 Big formula 每个$n\times n$矩阵的行列式都有$n!$个项，每个项里的元素均为不同行不同列的元素，元素的行列不能有重合！
+        \item 代数余子式法 Cofactors $\operatorname{det} A=a_{11}\left(a_{22} a_{33}-a_{23} a_{32}\right)+a_{12}\left(a_{23} a_{31}-a_{21} a_{33}\right)+a_{13}\left(a_{21} a_{32}-a_{22} a_{31}\right)$，括号里的便是代数余子式。$\operatorname{det} A=a_{i 1} C_{i 1}+a_{i 2} C_{i 2}+\cdots+a_{i n} C_{i n}$，$C_{i j}=(-1)^{i+j} \operatorname{det} M_{i j}$。
+    \end{itemize}
+
+    \subsection{Cramer's Rule, Inverses, and Volumes}
+    Cramer's Rule(可逆方阵):$\left[\begin{array}{l}{A} \\ {}\end{array}\right]\left[\begin{array}{lll}{x_{1}} & {0} & {0} \\ {x_{2}} & {1} & {0} \\ {x_{3}} & {0} & {1}\end{array}\right]=\left[\begin{array}{lll}{b_{1}} & {a_{12}} & {a_{13}} \\ {b_{2}} & {a_{22}} & {a_{23}} \\ {b_{3}} & {a_{32}} & {a_{33}}\end{array}\right]=B_{1}$
+    \\
+    $(\operatorname{det} A)\left(x_{1}\right)=\operatorname{det} B_{1} \quad$ or $\quad x_{1}=\frac{\operatorname{det} B_{1}}{\operatorname{det} A}$，$x_2,x_3$同理\\
+    故若$det(A)\neq 0, A \bm{x}=\bm{b}$则有：$x_{1}=\frac{\operatorname{det} B_{1}}{\operatorname{det} A} \quad x_{2}=\frac{\operatorname{det} B_{2}}{\operatorname{det} A} \quad \ldots \quad x_{n}=\frac{\operatorname{det} B_{n}}{\operatorname{det} A}$
+    \\
+    $A^{-1}$包含$A$的代数余子式，同样利用cramer法则解决$AA^{-1}=I$:\\
+    \\
+    过程：$AA^{-1}=A\left[\begin{array}{lll} \bm{col1} & \bm{col2} & \bm{col3} \end{array}\right] = \left[\begin{array}{lll}
+    1 & 0 & 0 \\0 & 1 & 0 \\0 & 0 & 1
+    \end{array}\right]$，将其中每一个等式单独拿出来利用Cramer法则进行计算,例如$A \boldsymbol{x}=(1,0,0)$\\
+    $\left|\begin{array}{lll}{1} & {a_{12}} & {a_{13}} \\ {0} & {a_{22}} & {a_{23}} \\ {0} & {a_{32}} & {a_{33}}\end{array}\right| \quad\left|\begin{array}{lll}{a_{11}} & {1} & {a_{13}} \\ {a_{21}} & {0} & {a_{23}} \\ {a_{31}} & {0} & {a_{33}}\end{array}\right| \quad\left|\begin{array}{lll}{a_{11}} & {a_{12}} & {1} \\ {a_{21}} & {a_{22}} & {0} \\ {a_{31}} & {a_{32}} & {0}\end{array}\right|$
+    \\
+    所以每个$|B_{j}|$都是$A$的代数余子式！ 故有：$\left(A^{-1}\right)_{i j}=\frac{C_{j i}}{\operatorname{det} A} \quad$ and $\quad A^{-1}=\frac{C^{\mathrm{T}}}{\operatorname{det} A}$
+    \\
+    \textbf{二阶行列式是平行四边形的面积，是三角形面积的一半！} \\
+    通过面积$s=\bm{ab}\sin \theta$证明。
+    \\
+    \textbf{矩阵的行列式其实是该矩阵变换下的图形面积或体积的伸缩因子。}（Jacobian matrix 雅可比矩阵） \\
+    \textbf{叉乘 Cross Product}\\
+    叉乘只用于三维空间中，结果为向量：$\bm{u}=\left(u_{1}, u_{2}, u_{3}\right)$ $\bm{v}=\left(v_{1}, v_{2}, v_{3}\right)$
+    \\
+    $\bm{u} \times \bm{v}=\left|\begin{array}{ccc}\bm{i} & \bm{j} & \bm{k} \\ {u_{1}} & {u_{2}} & {u_{3}} \\ {v_{1}} & {v_{2}} & {v_{3}}\end{array}\right|=\left(u_{2} v_{3}-u_{3} v_{2}\right) \bm{i}+\left(u_{3} v_{1}-u_{1} v_{3}\right) \bm{j}+\left(u_{1} v_{2}-u_{2} v_{1}\right) \bm{k}$
+    \\
+    向量$\bm{u} \times \bm{v}$垂直于$\bm{u}$和$\bm{v}$。此外，$|\bm{u} \times \bm{v}|=\|\boldsymbol{u}\|\|\boldsymbol{v}\||\sin \theta|$在数值上等于由向量$\bm{u}$和向量$\bm{v}$构成的平行四边形的面积。
+    \\
+    \textbf{三重积（混合积）triple product} \\
+    混合积是一个标量scalar，且它是这三个向量构成的体积！\\
+    $(\boldsymbol{u} \times \boldsymbol{v}) \cdot \boldsymbol{w}=\left|\begin{array}{lll}{w_{1}} & {w_{2}} & {w_{3}} \\ {u_{1}} & {u_{2}} & {u_{3}} \\ {v_{1}} & {v_{2}} & {v_{3}}\end{array}\right|=\left|\begin{array}{ccc}{u_{1}} & {u_{2}} & {u_{3}} \\ {v_{1}} & {v_{2}} & {v_{3}} \\ {w_{1}} & {w_{2}} & {w_{3}}\end{array}\right|$
+    \\
+    当$\bm{u,v,w}$均位于同一平面时，混合积为零。
