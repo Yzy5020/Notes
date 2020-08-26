@@ -1,0 +1,72 @@
+\section{Singular Values Decomposition}
+提前介绍后面要用到的性质。
+
+[矩阵$\bm{A^TA}$和$\bm{AA^T}$的性质及证明]\url{https://blog.csdn.net/Europe233/article/details/86720864}
+
+性质：$\bm{A^TA}$和$\bm{AA^T}$具有相同的非零特征值
+
+证明1：\url{https://blog.csdn.net/Europe233/article/details/86727078}
+
+证明2：
+\begin{enumerate}
+    \item 假设$\bm{x} \neq \bm{0}$，$\bm{A}^T\bm{Ax}=\lambda \bm{x}$，等式左右两边同时左乘一个$\bm{A}$
+    得$\bm{\rightarrow} (\bm{AA}^T)\bm{Ax}=\lambda \bm{Ax}$；
+    \item 同理，假设$\bm{x} \neq \bm{0}$，$\bm{AA}^T\bm{x}=\lambda \bm{x}$，左右两边同时左乘一个$\bm{A^T}$，
+    得$\bm{\rightarrow} (\bm{A}^T\bm{A})\bm{A}^T\bm{x}=\lambda \bm{A^T}\bm{x}$。
+    \item 经检验，维度是匹配的。这说明在$\lambda \neq 0$时上述式子成立，也即$\bm{A^TA}$和$\bm{AA^T}$具有相同的非零特征值。
+\end{enumerate}
+
+\subsection{SVD的目的}
+从空间变换的角度出发，对称阵的谱分解(特征值分解)：通过矩阵$\bm{A}$将一组基映射到同一组基。
+SVD的目的是：通过任意矩阵$\bm{A}$将一组单位正交基映射到另一组单位正交基。
+
+两种表示：
+$$A v_{i}=\sigma_{i} u_{i}$$
+$$\begin{array}{c}
+(m \text { by } n)(n \text { by } r) \\
+A V_{r}=U_{r} \Sigma_{r} \\
+(m \text { by } r)(r \text { by } r)
+\end{array}
+\\
+A\Bigg[\begin{array}{lll}
+v_{1} & \cdots & v_{r}
+\end{array}\Bigg]=\Bigg[\begin{array}{lll}
+u_{1} & \cdots & u_{r}
+\end{array}\Bigg]\left[\begin{array}{cccc}
+\sigma_{1} & & & \\
+& \cdot & \\
+& & \cdot & \\
+& & & \sigma_{r}
+\end{array}\right]$$
+
+
+书上7.2的直接给出向量$u,v$是从四个基本子空间的正交单位基而来。(TODO:没搞懂为什么？除了要找正交向量这个原因，还有呢？)
+
+\url{https://www.zhihu.com/question/22237507}、\url{https://blog.csdn.net/zhongkejingwang/article/details/43053513}，
+的推导过程：
+\textbf{假设}找到了一组正交的基$\left\{v_{1}, v_{2}, \ldots, v_{n}\right\}$，
+通过矩阵A将这组正交基映射为$\left\{A v_{1}, A v_{2}, \ldots, A v_{n}\right\}$，令映射后的向量两两正交即：
+$\left(\mathrm{A} v_{i}\right)^{T} A v_{j}=v_{i}^{T} A^{T} \mathrm{A} v_{j}=0$。
+根据假设，存在$v_{i}^{T} v_{j}=0$，由此看出，如果\textbf{选用矩阵$A^TA$这个实对称阵的特征向量作为$v_i$的话，就满足要求}，
+也即$v_{i}^{T} A^{T} \mathrm{A} v_{j}= v_{i}^{T} \lambda_{j} v_{j} =\lambda_{j} v_{i}^{T} v_{j} =\lambda_{j} v_{i}, v_{j}=0$。
+所以这里便找到了另一组对应的正交基$\left\{A v_{1}, A v_{2}, \ldots, A v_{n}\right\}$！
+
+然后将映射后的正交基单位化：
+\begin{itemize}
+    \item 因为$(A v_{i})^T A v_{i}=v_{i}^T (A^TA)v_i = v_{i}^T \lambda_{i} v_{i}=\lambda_{i}$($v_i$是正交单位向量)
+    \item 所以有$\left||A v_{i}\right||^{2}=\lambda_{i} \geq 0$
+    \item 取单位向量：$u_{i}=\dfrac{A v_{i}}{\left||A v_{i}\right||}=\dfrac{1}{\sqrt{\lambda_{i}}} A v_{i}$
+\end{itemize}
+由此可得，$A v_{i}=\sigma_{i} u_{i}, \sigma_{i}($奇异值$)=\sqrt{\lambda_{i}}, 0 \leq i \leq \mathrm{k}, \mathrm{k}=\operatorname{Rank}(\mathrm{A})$
+
+\textbf{注意}：对$u_{i}=\dfrac{A v_{i}}{\left||A v_{i}\right||}=\dfrac{1}{\sqrt{\lambda_{i}}} A v_{i}$左右两边同时左乘上$AA^T$
+    得
+\begin{itemize}
+    \item $AA^Tu_{i}=\dfrac{1}{\sqrt{\lambda_{i}}} AA^TA v_{i}$
+    \item 即$AA^Tu_{i}=\dfrac{1}{\sqrt{\lambda_{i}}} A(A^TA) v_{i}=\dfrac{1}{\sqrt{\lambda_{i}}} A \lambda_i v_{i}$
+    \item 即$AA^Tu_{i}=\lambda_i \dfrac{1}{\sqrt{\lambda_{i}}} A  v_{i}$
+    \item 即$AA^Tu_{i}=\lambda_i u_i$
+\end{itemize}
+所以，向量$u_i$是矩阵$AA^T$的特征向量，且特征值相同(对应最开始$AA^T, A^TA$的性质)
+
+Rayleigh quotient 瑞利熵
