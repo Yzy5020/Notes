@@ -162,8 +162,8 @@
     \\
     \textbf{解耦:}在之前的$\dfrac{d\bm{u}}{dt}=A\bm{u}$中，有$u_1, u_2$耦合,
     \begin{enumerate}
-        \item 设$\bm{u}=X\bm{v}$, $\dfrac{{d} \bm{u}}{dt}={S} \dfrac{{d} \bm{v}}{{dt}}=A\bm{u}=AX\bm{v}$
-        \item 提取出${S} \dfrac{{d} \bm{v}}{{dt}}=AX\bm{v}$，左右两边同时乘上$X^{-1}$得到：\\
+        \item 设$\bm{u}=X\bm{v}$, $\dfrac{{d} \bm{u}}{dt}={X} \dfrac{{d} \bm{v}}{{dt}}=A\bm{u}=AX\bm{v}$
+        \item 提取出${X} \dfrac{{d} \bm{v}}{{dt}}=AX\bm{v}$，左右两边同时左乘上$X^{-1}$得到：\\
         $\dfrac{{d} \bm{v}}{{dt}}=X^{-1}AX\bm{v} = \Lambda v$
         \item 由此得到关于$\bm{v}$的对角化方程组，不耦合---$\dfrac{\mathrm{d} v_{1}}{\mathrm{dt}}=\lambda_{1} v_{1}, \dfrac{\mathrm{d} v_{2}}{\mathrm{dt}}=\lambda_{2} v_{2}$
         \item 最终有：$\bm{v}(\mathrm{t})=e^{\Lambda \mathrm{t}} \bm{v}(0)$且$\bm{u}(t)=e^{A t} \bm{u}(0)=\mathrm{Xe}^{\Lambda \mathrm{t}} X^{-1} \bm{u}(0)$
@@ -197,12 +197,15 @@
     对于实数阵，复数的特征值和特征向量都是共轭对，$\lambda=a+i b$\quad $\overline{\lambda}=a-i b$，If $A \boldsymbol{x}=\lambda \boldsymbol{x} \quad$ then $\quad A \overline{\boldsymbol{x}}=\overline{\lambda} \overline{\boldsymbol{x}}$
 
     \subsubsection{特征值 vs 主元(行阶梯)}
-    对于\textbf{对称阵}来说，\textbf{正特征值的数目=正主元数目}(也有特征值乘积=det(S)= 主元乘积)\\
+    对于\textbf{对称阵}来说，\textbf{正特征值的数目=正主元数目}(也有特征值乘积=det(S)= 主元乘积)
+
+    \textbf{特殊情况}：对称阵$\bm{S}$的所有特征值$\lambda_i > 0$ 当且仅当 它的所有主元pivots是正的(大于零)。该特殊情况在6.5正定矩阵中很重要！
+
     举例证明：
     $S = \left[\begin{array}{ll}{1} & {3} \\ {3} & {1}\end{array}\right]$, 进行LU分解$\rightarrow S=LU=L D L^{\mathrm{T}}=$$\left[\begin{array}{ll}{1} & {3} \\ {3} & {1}\end{array}\right]=\left[\begin{array}{ll}{1} & {0} \\ {3} & {1}\end{array}\right]\left[\begin{array}{ll}{1} \\ {} & {-8}\end{array}\right]\left[\begin{array}{ll}{1} & {3} \\ {0} & {1}\end{array}\right]$
-    \\
+
     S的特征值为4，-2。当$L \rightarrow I$时，$S \rightarrow D$即$D = IDI^{T}$且特征值为1和-8，这便是S的主元pivot。
-    \\
+
     因为S在往D转变的过程中，特征值没有越过0，所以特征值的符号一直没有改变！故\textbf{特征值的符号与主元符号相同！}
 
     \subsubsection{所有对称阵均可对角化}
@@ -214,8 +217,10 @@
     \textbf{惯性定理Law of Inertia:}\quad $S$与$A^{\mathrm{T}} S A$一致(A为方阵且可逆)，且它们对应正，负，零特征值数量相同！
 
     \subsection{正定矩阵 Positive Definite Matrices}
-    \textbf{正定矩阵:}对称阵，且所有特征值$\lambda >0$。\\
+    \textbf{正定矩阵:}对称阵，且所有特征值$\lambda >0$。
+
     正定，半定，负定
+
     正定矩阵的判别\textbf{两种}方法：
     \begin{itemize}
         \item 矩阵左上行列式从$1\times 1 \rightarrow n\times n$均大于0
@@ -223,14 +228,18 @@
     \end{itemize}
     \subsubsection{基于能量的定义 energy-based definition}
     $S \boldsymbol{x}=\lambda \boldsymbol{x}, \lambda >0$, $\boldsymbol{x}^{\mathrm{T}} \boldsymbol{x}=\|\boldsymbol{x}\|^{2}$, 所以$\boldsymbol{x}^{\mathrm{T}} S \boldsymbol{x}=\lambda \boldsymbol{x}^{\mathrm{T}} \boldsymbol{x}$\textbf{对任何非零向量x都是大于0！}
-    \\
-    而数$x^{\mathrm{T}} S x$在系统中称为能量, 如此便定义了正定矩阵！即对任意非零向量$\bm{x}\neq 0$有$\bm{x}^{\mathrm{T}} S \bm{x}>0$, 则S是正定的！
-    \\
-    若S，T是正定的，则S+T也是正定的。\\
-    $S=A^{T}A$是方阵且对称(A任意形状)，若A列向量线性无关,则S是正定的！\\
+    而数$x^{\mathrm{T}} S x$在系统中称为能量, 如此便定义了正定矩阵！
+
+    \textbf{定义：}对任意非零向量$\bm{x}\neq 0$有$\bm{x}^{\mathrm{T}} S \bm{x}>0$, 则S是正定的！
+
+    若S，T是正定的，则S+T也是正定的。
+
+    \textbf{命题：}$S=A^{T}A$是方阵且对称(A任意形状)，若A列向量线性无关,则S是正定的！
+
     \textbf{证明：}$\bm{x}^{\mathrm{T}} S \bm{x}= \boldsymbol{x}^{\mathrm{T}} A^{\mathrm{T}} A \bm{x} =(A \boldsymbol{x})^{\mathrm{T}}(A \boldsymbol{x})=\|A \boldsymbol{x}\|^{2}$。
-    A的列线性无关保证了当$\bm{x} \neq 0$时$A \boldsymbol{x}$不为0。\\
-    \textbf{Cholesky factorization:} 对称阵$S=LU=LDL^{T}=L\sqrt{D} \sqrt{D}L^{T}=L\sqrt{D} (L \sqrt{D})^{T}=A^{T}A $, 且A的列向量线性无关！
+    A的列线性无关保证了当$\bm{x} \neq 0$时$A \boldsymbol{x}$不为0。
+
+    \textbf{Cholesky factorization(LU三角分解在实对称阵条件下的变形):} 实对称阵$S=LU=LDL^{T}=L\sqrt{D} \sqrt{D}L^{T}=L\sqrt{D} (L \sqrt{D})^{T}=A^{T}A $, 且A的列向量线性无关！A为上三角矩阵！
 
     \subsubsection{正半定矩阵Positive Semidefinite Matrices}
     正半定矩阵的所有$\lambda \geq 0$,最小的特征值为0，且对任意非零向量$\bm{x}$有$\boldsymbol{x}^{\mathrm{T}} S \boldsymbol{x} \geq 0$。该矩阵进行$A^{T}A$分解后，A的列向量总是线性相关！
@@ -258,8 +267,12 @@
     再有$S=\left[\begin{array}{ccc}{F_{x x}} & {F_{x y}} & {F_{x z}} \\ {F_{y x}} & {F_{y y}} & {F_{y z}} \\ {F_{z x}} & {F_{z y}} & {F_{z z}}\end{array}\right]$是正定的！
     
     \subsubsection{problem set}
-    1. 当S,T均为正定矩阵，ST未必是对称的，但是ST的特征值依然是正的！证明：广义特征值问题：$K \boldsymbol{x}=\lambda M \boldsymbol{x}$有$S T=M^{-1} K$，则$S T \boldsymbol{x}=\lambda \boldsymbol{x} \rightarrow (T \boldsymbol{x})^{\mathrm{T}} S T \boldsymbol{x}=(T \boldsymbol{x})^{\mathrm{T}} \lambda x .$ Then $\lambda=\boldsymbol{x}^{\mathrm{T}} T^{\mathrm{T}} S T \boldsymbol{x} / \boldsymbol{x}^{\mathrm{T}} T \boldsymbol{x}>0$。（利用了S，T的正定性）
-    
+    命题： 当S,T均为正定矩阵，ST未必是对称的，但是ST的特征值依然是正的！
+    \\
+    证明：
+
+    广义特征值问题：$K \boldsymbol{x}=\lambda M \boldsymbol{x}$有$S T=M^{-1} K$，则$S T \boldsymbol{x}=\lambda \boldsymbol{x} \rightarrow (T \boldsymbol{x})^{\mathrm{T}} S T \boldsymbol{x}=(T \boldsymbol{x})^{\mathrm{T}} \lambda x .$ Then $\lambda=\boldsymbol{x}^{\mathrm{T}} T^{\mathrm{T}} S T \boldsymbol{x} / \boldsymbol{x}^{\mathrm{T}} T \boldsymbol{x}>0$。（利用了S，T的正定性）
+
     \subsection{更正：傅里叶级数fourier series与函数空间的内积---在10.5中}
     假设一个n维空间的一组完整基是n个标准正交向量$\bm{q}_{1}, \bm{q}_{2}, \dots ,\bm{q}_{n}$，那么在此空间中任意向量$\bm{v}$可以由这组基线性表示：$\bm{v}=\bm{x}_{1} \bm{q}_{1}+\bm{x}_{2} \bm{q}_{2}+\ldots +\bm{x}_{n} \bm{q}_{n}$。\\
     矩阵化：$Q \bm{x}=\bm{v} \rightarrow \bm{x}=Q^{-1} \bm{v}$，因为$Q^{T}=Q^{-1}$，所以$\bm{x}=Q^{-1} \bm{v}=Q^{T} \bm{v}$，所以向量$\bm{v}$的各个分量为$x_{i} = \bm{q}_{i}^{T} \bm{v}$(行乘列)。\\

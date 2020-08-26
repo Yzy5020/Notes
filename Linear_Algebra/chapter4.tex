@@ -211,13 +211,17 @@ to every combination of the rows.
 
     \subsubsection{施密特正交化}
     思想：新向量减去它在已有的正交向量上的投影向量，即求误差$e$，这就是新的正交向量！最后对每个正交向量除以自己的长度，进行归一化！
+
     \subsubsection{$A_{m\times n}=Q_{m\times m}R_{m\times n}$分解}
+    具体表述以及推导过程参考\url{https://blog.csdn.net/u010945683/article/details/45972819}(\textbf{QR分解解析})，
+    里面将从施密特正交化求正交基的方法中将转换前和转换后的向量用线性组合表示出来，然后再写成矩阵乘法形式，清晰易懂。
+
     将上述的A与Q(规范正交矩阵)用R(上三角矩阵)联系起来，\textbf{A--->施密特正交化--->Q},每一步$\boldsymbol{a}_{1}, \dots, \boldsymbol{a}_{k}$都是$q_{1}, \ldots, q_{k}$的线性组合，后面的$\bm{q}_{k+1}...$均不涉及。正交化过程中用到的转换矩阵便是$T,R=T^{-1}$。
-    \\
+
     $A=Q R=$
     $\left[\begin{array}{lll}{\bm{a}} & {\bm{b}} & {\bm{c}}\end{array}\right]=\left[\begin{array}{lll}{\bm{q}_{1}} & {\bm{q}_{2}} & {\bm{q}_{3}}\end{array}\right]\left[\begin{array}{ccc}{\bm{q}_{1}^{T} \bm{a}} & {\bm{q}_{1}^{T} \bm{b}} & {\bm{q}_{1}^{T} \bm{c}} \\ {} & {\bm{q}_{2}^{T} \bm{b}} & {\bm{q}_{2}^{T} \bm{c}} \\ {} & {} & {\bm{q}_{3}^{T} \bm{c}}\end{array}\right]$
-    \\
-    简而言之，$A=Q R$就是Gram-Schmidt,左乘一个$Q^T$得：$\boldsymbol{R}=\boldsymbol{Q}^{\mathrm{T}} \boldsymbol{A}$，其中$R$为上三角矩阵！(因为$Q^T Q = I$)
+
+    简而言之，$A=Q R$就是Gram-Schmidt正交化的产物,左乘一个$Q^T$得：$\boldsymbol{R}=\boldsymbol{Q}^{\mathrm{T}} \boldsymbol{A}$，其中$R$为上三角矩阵！(因为$Q^T Q = I$)
 
     \subsubsection{Problem set}
     4. (a) Any $Q_{m\times n}$ with $n<m$ has $Q Q^{\mathrm{T}} \neq I$，如$Q=\left[\begin{array}{ll}{1} & {0} \\ {0} & {1} \\ {0} & {0}\end{array}\right], Q Q^{\mathrm{T}}=\left[\begin{array}{ccc}{1} & {0} & {0} \\ {0} & {1} & {0} \\ {0} & {0} & {0}\end{array}\right] \neq I$
