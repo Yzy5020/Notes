@@ -17,10 +17,13 @@
 \end{enumerate}
 
 \subsection{SVD的目的}
-从空间变换的角度出发，对称阵的谱分解(特征值分解)：通过矩阵$\bm{A}$将一组基映射到同一组基。
-SVD的目的是：通过任意矩阵$\bm{A}$将一组单位正交基映射到另一组单位正交基。
+从空间变换的角度出发
+\begin{itemize}
+    \item 对称阵的谱分解(特征值分解)：通过矩阵$\bm{A}$将一组基映射到同一组基。
+    \item SVD的目的是：通过任意矩阵$\bm{A}$将一组单位正交基映射到另一组单位正交基。
+\end{itemize}
 
-两种表示：
+SVD的两种表示(下面的向量和矩阵都没有加粗，自行辨识)：
 $$A v_{i}=\sigma_{i} u_{i}$$
 $$\begin{array}{c}
 (m \text { by } n)(n \text { by } r) \\
@@ -40,10 +43,24 @@ u_{1} & \cdots & u_{r}
 \end{array}\right]$$
 
 
-书上7.2的直接给出向量$u,v$是从四个基本子空间的正交单位基而来。(TODO:没搞懂为什么？除了要找正交向量这个原因，还有呢？)
+书上7.2的直接给出向量$u,v$是从四个基本子空间的正交单位基而来。
+
+这里给出个人想法：
+\begin{itemize}
+    \item 直接从目标的表达式$\bm{A V=U \Sigma}$(此处$\bm{V,U,\Sigma}$为方阵)看出，
+    每个向量$\bm{u}_i$是矩阵$\bm{A}$的列向量的线性组合，所以$\bm{u}_i$处于$\bm{A}$的列空间中！
+    \item 倘若按照SVD的目的，从一组单位正交基映射到另一组单位正交基，那么矩阵$\bm{U,V}$便都是正交矩阵，
+    所以对目标表达式左乘一个$U^T$，右乘一个$V^T$然后再转置得到：$\bm{A}^T\bm{U} = \bm{V\Sigma}$。
+    由此便可以按列向量展开，然后看出每个$\bm{v}_i$向量都是矩阵$A$的行向量的线性组合，即$\bm{v}_i$处于
+    $\bm{A}$的行空间中。
+    \item 所以书上一开始就直接去$\bm{A}$的列空间和行空间里面去找规范正交基
+    \item 后面分别找零空间和左零空间的规范正交基是因为要找满足分别与先前两组规范正交基正交的另外两组基，
+    并且恰好分别能将其扩展为方阵！
+\end{itemize}
 
 \url{https://www.zhihu.com/question/22237507}、\url{https://blog.csdn.net/zhongkejingwang/article/details/43053513}，
 的推导过程：
+\\
 \textbf{假设}找到了一组正交的基$\left\{v_{1}, v_{2}, \ldots, v_{n}\right\}$，
 通过矩阵A将这组正交基映射为$\left\{A v_{1}, A v_{2}, \ldots, A v_{n}\right\}$，令映射后的向量两两正交即：
 $\left(\mathrm{A} v_{i}\right)^{T} A v_{j}=v_{i}^{T} A^{T} \mathrm{A} v_{j}=0$。
@@ -67,6 +84,16 @@ $\left(\mathrm{A} v_{i}\right)^{T} A v_{j}=v_{i}^{T} A^{T} \mathrm{A} v_{j}=0$�
     \item 即$AA^Tu_{i}=\lambda_i \dfrac{1}{\sqrt{\lambda_{i}}} A  v_{i}$
     \item 即$AA^Tu_{i}=\lambda_i u_i$
 \end{itemize}
-所以，向量$u_i$是矩阵$AA^T$的特征向量，且特征值相同(对应最开始$AA^T, A^TA$的性质)
+\textbf{所以，向量$u_i$是矩阵$AA^T$的特征向量，且特征值相同(对应最开始$AA^T, A^TA$的性质)}
 
-Rayleigh quotient 瑞利熵
+将SVD用向量写出来：$A=U \Sigma V^{\mathrm{T}}=u_{1} \sigma_{1} v_{1}^{\mathrm{T}}+\cdots+u_{r} \sigma_{r} v_{r}^{\mathrm{T}}$，
+这便是$\bm{A}$的满秩分解，将$\bm{A}$分解为只有$rank(\bm{A})$个矩阵之和！当然$\bm{U,V}$ 扩展成方阵也是，
+新增进去的向量不起作用，以及$\bm{\Sigma}$多出来的部分里面值为0。
+
+\subsection{瑞利熵(Rayleigh quotient)}
+实数上的定义：
+$$r(\boldsymbol{x})=\dfrac{\boldsymbol{x}^{\mathrm{T}} S \boldsymbol{x}}{\boldsymbol{x}^{\mathrm{T}} \boldsymbol{x}}$$
+可以参考\url{https://www.cnblogs.com/xingshansi/p/6702188.html?utm_source=itdadao&utm_medium=referral}A-普通瑞利熵
+部分，得出对该式求得最大值时的条件就是$S x=r(x) x$，也就是说当$r(\bm{x})$为$S$的特征值，$\bm{x}$为$S$的特征向量时满足要求！
+与书上的表述一致。
+
