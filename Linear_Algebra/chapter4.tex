@@ -81,8 +81,9 @@ to every combination of the rows.
     \textbf{矩阵${I-P}$}同样对向量$\bm{b}$作投影，$(I-P) \boldsymbol{b}=\bm{b}-\bm{p}=\bm{e}$,这说明该矩阵将b投影到b的垂直部分e。
     \\
     \textbf{当矩阵P将b投影至一个子空间V中，I-P会将b投影到一个垂直于V的子空间W中}，上述的I-P将b投影至垂直于向量$\bm{a}$的平面中！
+
     \subsubsection{b投影到子空间上}
-    假设有n个向量$\boldsymbol{a}_{1}, \ldots, \boldsymbol{a}_{n}$ in $\mathbf{R}^{m}$，且它们线性无关，$A=[\boldsymbol{a}_{1}, \ldots, \boldsymbol{a}_{n}]$。
+    假设有n个向量$\boldsymbol{a}_{1}, \ldots, \boldsymbol{a}_{n}$ in $\mathbf{R}^{m}$，且它们线性无关，$A_{m\times n}=[\boldsymbol{a}_{1}, \ldots, \boldsymbol{a}_{n}]$。
     \\
     找到最接近$\bm{b}$的线性组合$\boldsymbol{p}=\widehat{x}_{1} \boldsymbol{a}_{1}+\cdots+\widehat{x}_{n} \boldsymbol{a}_{n}=A \widehat{\boldsymbol{x}}$即为将$\bm{b}$投影至$\bm{a's}$扩展的子空间。
     \\
@@ -105,17 +106,19 @@ to every combination of the rows.
     $$
     将该等式展开，得到一个重要的式子：$A^{\mathrm{T}} A \widehat{\boldsymbol{x}}=A^{\mathrm{T}} \boldsymbol{b}$-----\textbf{正规方程组}
     \\
-    又$\because A$是可逆的，所以$A^T A$也是可逆的。由此可以求得:\\
+    又$\because A_{m\times n}$的列向量线性无关，所以$A^T A$是可逆的(证明见下面)。由此可以求得:\\
     系数向量$\widehat{\bm{x}}_{n\times 1}=\left(A^{\mathrm{T}} A\right)^{-1} A^{\mathrm{T}} \boldsymbol{b}$
     \\
     $\therefore$投影向量$\bm{p}_{m\times 1}=A \widehat{\bm{x}}=A\left(A^{\mathrm{T}} A\right)^{-1} A^{\mathrm{T}} \bm{b}$
     \\
     $\therefore$投影矩阵$P_{m\times m}=A\left(A^{\mathrm{T}} A\right)^{-1} A^{\mathrm{T}}$
     \\
-    这与n=1即投影到一条直线上时对应的公式非常类似！\\
-    \textbf{同样，$P^2=P$，做两次投影不改变第一次的投影！}\\
+    这与n=1即投影到一条直线上时对应的公式非常类似！
+
+    \textbf{同样，$P^2=P$，做两次投影不改变第一次的投影！}
+
     \textbf{注意，公式中的$P=A\left(A^{\mathrm{T}} A\right)^{-1} A^{\mathrm{T}}$不能拆成$P=A A^{-1}\left(A^{\mathrm{T}}\right)^{-1} A^{\mathrm{T}}$，因为A有可能不是方阵，则不存在A的逆！}
-    \\
+
     \textbf{P222 证明了当A不是方阵时，$rank(A^T A)=rank(A)$}。(同解方程组，即相同的零空间！) \\
     \textbf{If $A^{\mathrm{T}} A x=0$ then $A x=0$的向量空间解法}：如果$A^{\mathrm{T}} A \boldsymbol{x}=\mathbf{0}$，则$A\bm{x}$位于$A$的左零空间$\bm{N}(A^T)$中，但是$A\bm{x}$总是在A的列空间$\bm{C}(A)$中。要同时在这两个正交互补空间中，$A\bm{x}$必须为零。 所以$A$和$A^T A$具有相同的零空间。
     \\
@@ -126,24 +129,44 @@ to every combination of the rows.
         \item $P \boldsymbol{b}=\boldsymbol{p}$
         \item $P$将b投影到A的列空间$\bm{C}(A)$，$I-P$将b投影到A的左零空间$\bm{N}(A^T)$
     \end{itemize}
-    \textbf{更一般地，在$\bm{R}^m$中，若$\bm{b}$投影到其中n个正交补子空间中$V_i$(n<m)，且$\sum_{i=1}^{n}dim(V_i)=m$,则有$\sum_{i=1}^{n}\bm{p}_i=\bm{b}, \sum_{i=1}^{n}P_i=I$。}
+    \textbf{更一般地，在$\bm{R}^m$中，若$\bm{b}$投影到其中n个正交补子空间中$V_i$(n）00009m)，且$\sum_{i=1}^{n}dim(V_i)=m$,则有$\sum_{i=1}^{n}\bm{p}_i=\bm{b}, \sum_{i=1}^{n}P_i=I$。}
     \\
     例如，三维空间中将b分别投影到一组基底，则投影向量便是这组基底构成b的线性组合，和为b；投影矩阵之和便是单位矩阵。
 
     \subsection{最小二乘逼近Least Squares Approximations}
     4.2练习倒数第二题 Kalman filter 卡尔曼滤波器\\
-    \textbf{假设A列向量线性无关}\\
-    当$A \boldsymbol{x}=\bm{b}$无解时，误差$\bm{e}=\bm{b}-A \bm{x}$如果尽可能地小，则$\hat{\bm{x}}$(投影系数)是最小二乘解。
-    \\
-    对$A \boldsymbol{x}=\bm{b}$这种无解问题时，一般采取\textbf{等式两边左乘$A^T$},然后再解$A^{\mathrm{T}} A \widehat{\boldsymbol{x}}=A^{\mathrm{T}} \boldsymbol{b}$即n个R的笛卡尔积，即n维向量的所有可能情况！
+    \textbf{假设$A_{m\times n}$列向量线性无关，从$Ax$是将$x$投影到$A$的列空间的角度来看}
+    (也即\textbf{投影角度})：
+    \begin{itemize}
+        \item 当$A \boldsymbol{x}=\bm{b}$有解时，向量$\bm{b}$处于$A$的列空间中，误差$\bm{e}=\bm{b}-A \bm{x}=zero$，所以$\bm{x}$就是要求的解；
+        \item 当$A \boldsymbol{x}=\bm{b}$无解时，向量$\bm{b}$处于$A$的列空间外，误差$\bm{e}=\bm{b}-A \bm{x}$是必然存在的，
+        但是如果能让误差$\bm{e}$尽可能地小，那便称$\hat{\bm{x}}$(投影系数)是最小二乘解。
+    \end{itemize}
+
+    当求解$A \boldsymbol{x}=\bm{b}$这种无解问题的最小二乘解时，这里直接给出其中一种\textbf{基于投影}的做法：
+
+    可以利用上一小节的投影法中误差向量$\bm{e}$垂直于
+    投影空间(列空间)这个条件求得最小二乘解。也即\textbf{等式两边左乘$A^T$}，
+    然后再解$A^{\mathrm{T}} A \widehat{\boldsymbol{x}}=A^{\mathrm{T}} \boldsymbol{b}$。
+
+    至于为什么该条件能够使其误差向量最小？详见下面一小节。
+
     \subsubsection{最小化误差minimizing the Error}
+    最小二乘法的矩阵以及代数直接推导见(\url{https://www.cnblogs.com/pinard/p/5976811.html})
+
     三种方式给出最佳$\bm{x}$即投影系数$\hat{\bm{x}}$。
     \begin{itemize}
-        \item 几何：通过垂直，得出最佳误差$\bm{e}=\bm{b}-\bm{p}$,所以最佳系数为$\boldsymbol{p} = A \widehat{\boldsymbol{x}}$中的$\hat{x}$。
-        \item 代数：\textbf{正规方程组法normal eqution}$A x$可视为b尝试投影到A列空间的投影向量，则误差向量（非最小）$\bm{e} = A\bm{x} - \bm{b}$，若要使误差最小，则取$x= \widehat{\bm{x}}$,使误差长度$E=\|A x-b\|^{2}$最小。
+        \item 几何：通过误差向量$\bm{e}$与所有列向量(线性无关)垂直这个条件，得出最佳误差$\bm{e}(=\bm{b}-\bm{p})$,所以最佳系数为$\boldsymbol{p} = A \widehat{\boldsymbol{x}}$中的$\bm{\hat{x}}$。
+        \item 代数：(\textbf{正规方程组法normal eqution})
+        $\bm{b} = \bm{p} + \bm{e}$将向量$\bm{b}$分成两部分，其中$\bm{p}$在列空间中，$\bm{e}$与列空间垂直并处于左零空间。
+        所以$A \boldsymbol{x}=\boldsymbol{b}=\boldsymbol{p}+\boldsymbol{e}$是不可解的；
+        $A \widehat{\boldsymbol{x}}=\boldsymbol{p}$是有解的(通过去掉误差向量$\bm{e}$并求解$A^{\mathrm{T}} A \widehat{\boldsymbol{x}}=A^{\mathrm{T}} \boldsymbol{b}$得到$\widehat{\boldsymbol{x}} = \left(A^{\mathrm{T}} A\right)^{-1} A^{\mathrm{T}} \boldsymbol{b}$)。
+
+        将$A x$视为b尝试投影到A列空间的投影向量$\bm{p}$，
+        则有误差向量(非最小)$\bm{e} = A\bm{x} - \bm{b}$，若要使误差最小，即使误差长度$E=\|A x-b\|^{2}$最小，则取$x= \widehat{\bm{x}}$满足要求。
         \item 微积分：通过令误差函数$E=\|A x-b\|^{2}$(写成函数形式)对各个未知数(即$\widehat{\bm{x}}$的各个分量)的一阶偏导为零(式子要除以2)，来求出矩阵$A^T A$。
     \end{itemize}
-    $A\bm{x}=\bm{b}$：
+    $A\bm{x}=\bm{b}$(A的列向量线性无关)：
     \begin{itemize}
         \item \textbf{有解：}将$\bm{x}$分解成$\boldsymbol{x}_{r}+\boldsymbol{x}_{n}$来求解！
         \item \textbf{无解：}将$\bm{b}$分解成$\bm{b=p+e}$来求解，即求解$A \widehat{\boldsymbol{x}}=\boldsymbol{p}$，而误差$\bm{e}=\boldsymbol{b}-\boldsymbol{p}$是不可避免的！
@@ -158,15 +181,17 @@ to every combination of the rows.
     \quad \widehat{\boldsymbol{x}}=(\boldsymbol{C}, \boldsymbol{D}) \quad e_{i}=b_{i}-C-D t_{i}
     $$
     \includegraphics[width=0.9\textwidth]{./least square.png}
+
     \textbf{Gram-Schmidt施密特正交化(4.3最后一题)}：先将A的列正交化(即将$x_i := x_i - 1/n\sum_{i=1}^{n}x_i$)，然后便可以得到对角矩阵$A^T A$，这样求$\widehat{\bm{x}}$就很方便！
-    \\
-    \textbf{若A的列向量线性相关}\\
-    涉及到奇异值分解SVD(7.4)\\
-    因为A的列向量线性相关，若把b投影到A的列空间中，即改为$A \widehat{\boldsymbol{x}}=\boldsymbol{p}$,则此时会产生多个解，即有多条直线可以选，但是不知道哪条是最佳的！
-    \\
-    7.4中会利用A的伪逆"pseudoinverse"来选择一个最短解$\widehat{\bm{x}}$。\\
-    若A的\textbf{列线性无关}，它的伪逆是$L=\left(A^{\mathrm{T}} A\right)^{-1} A^{\mathrm{T}}$
-    \\
+
+    \subsubsection{若A的列向量线性相关}
+
+    因为A的列向量线性相关，若把b投影到A的列空间中，即求解$A \widehat{\boldsymbol{x}}=\boldsymbol{p}$,则此时会产生多个解，即有多条直线可以选，但是不知道哪条是最佳的！
+
+    涉及到奇异值分解SVD(7.4)，7.4中会利用A的伪逆"pseudoinverse"来选择一个最短解$\widehat{\bm{x}}$。
+
+    这里直接给出结果：若A的\textbf{列线性无关}，它的伪逆是$L=\left(A^{\mathrm{T}} A\right)^{-1} A^{\mathrm{T}}$
+
     \textbf{拟合抛物线：}\\
     同样有m个点，$(t_{1},b_{1}), \dots, (t_{m},b_{m})$，利用$C+D t+E t^{2}$来拟合这些点！\\
     $$
@@ -216,7 +241,7 @@ to every combination of the rows.
     具体表述以及推导过程参考\url{https://blog.csdn.net/u010945683/article/details/45972819}(\textbf{QR分解解析})，
     里面将从施密特正交化求正交基的方法中将转换前和转换后的向量用线性组合表示出来，然后再写成矩阵乘法形式，清晰易懂。
 
-    将上述的A与Q(规范正交矩阵)用R(上三角矩阵)联系起来，\textbf{A--->施密特正交化--->Q},每一步$\boldsymbol{a}_{1}, \dots, \boldsymbol{a}_{k}$都是$q_{1}, \ldots, q_{k}$的线性组合，后面的$\bm{q}_{k+1}...$均不涉及。正交化过程中用到的转换矩阵便是$T,R=T^{-1}$。
+    将上述的A与Q(规范正交矩阵)用R(上三角矩阵)联系起来，\textbf{A---）00009施密特正交化--->Q},每一步$\boldsymbol{a}_{1}, \dots, \boldsymbol{a}_{k}$都是$q_{1}, \ldots, q_{k}$的线性组合，后面的$\bm{q}_{k+1}...$均不涉及。正交化过程中用到的转换矩阵便是$T,R=T^{-1}$。
 
     $A=Q R=$
     $\left[\begin{array}{lll}{\bm{a}} & {\bm{b}} & {\bm{c}}\end{array}\right]=\left[\begin{array}{lll}{\bm{q}_{1}} & {\bm{q}_{2}} & {\bm{q}_{3}}\end{array}\right]\left[\begin{array}{ccc}{\bm{q}_{1}^{T} \bm{a}} & {\bm{q}_{1}^{T} \bm{b}} & {\bm{q}_{1}^{T} \bm{c}} \\ {} & {\bm{q}_{2}^{T} \bm{b}} & {\bm{q}_{2}^{T} \bm{c}} \\ {} & {} & {\bm{q}_{3}^{T} \bm{c}}\end{array}\right]$
