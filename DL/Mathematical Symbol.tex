@@ -1,6 +1,7 @@
 \documentclass[UTF8]{article}
 \usepackage{ctex}
 \usepackage{amsmath}
+\usepackage{amssymb}
 \usepackage{graphicx}
 \usepackage{bm}
 \usepackage[colorlinks, linkcolor=black]{hyperref}
@@ -56,6 +57,126 @@
     由于在序列的每个位置都有损失函数$L^{(t)}=-{y^{(t)}}^T log{\hat{y}^{(t)}}$，因此最终的损失$L$为：$L=\sum_{t=1}^{\tau} L^{(t)}$
 
     下面的推导详见草稿纸笔记。。。
+
+    \section{Convolution}
+
+    \href{https://en.wikipedia.org/wiki/Convolution}{Convolution (from en.wikipedia)}
+    、
+    \href{https://zh.wikipedia.org/wiki/%E5%8D%B7%E7%A7%AF}{卷积 (from zh.wikipedia)}
+
+    卷积的连续、离散定义见上述两个链接。
+
+\hspace*{\fill} \\
+    \href{https://zhuanlan.zhihu.com/p/150737244}{卷积性质及其证明}：
+    \begin{itemize}
+        \item 第2条微分性质是连续卷积的；
+        \item 第5条是从信号处理的角度推导出离散的卷积形式；
+    \end{itemize}
+
+    在上述两个维基百科链接中，\textbf{卷积的微分性质同时适用于连续和离散的形式，只是在离散情况下微分算子D
+    变成差分算子！}
+
+\hspace*{\fill} \\
+    \href{https://www.zhihu.com/question/22298352/answer/637156871}{卷积的含义及直观地理解}
+
+\hspace*{\fill} \\
+    复旦邱锡鹏《神经网络与深度学习》(下文均称作nndl)第5章 5.1详细介绍了数学上的一维、二维卷积定义以及互相关定义！
+    (\href{https://www.zybuluo.com/hanbingtao/note/485480}{零基础入门深度学习(4) - 卷积神经网络}、
+    \href{https://www.cnblogs.com/pinard/p/6483207.html}{卷积神经网络(CNN)刘建平}
+    与上述书本介绍的定义是类似的，只是书上的卷积核下标从1开始，而这两个链接卷积核的下标从0开始！)
+
+    从信号叠加的角度来看比较容易理解，\textbf{一维卷积}$y_{t}=\sum_{k=1}^{K} w_{k} x_{t-k+1}$表示
+    在时刻$t$收到的信号$y_t$为当前时刻产生的信息$\{x_{t}\}$和以前时刻延迟信息$\{x_{t-k+1}\}$的叠加。
+    一般来说，每个时间点$t$都有完整时序(数目)变化$[1,K]$的$w_{k}$被称作卷积核或滤波器(在二维(图像)情况下同理)。
+
+    \textbf{二维卷积}：给定一个图像$\boldsymbol{X} \in \mathbb{R}^{M \times N}$和一个滤波器$\boldsymbol{W} \in \mathbb{R}^{U \times V}$
+    一般$U \ll M, V \ll N$，则$y_{i j}=\sum_{u=1}^{U} \sum_{v=1}^{V} w_{u v} x_{i-u+1, j-v+1}$，
+    这里假设输出$y_{ij}$的下标$(i, j)$从$(U, V)$开始($Y$矩阵的第一个元素)，这样输出矩阵才不会出现下标为负的情况。
+    可以看出在二维卷积的定义下，\textbf{卷积核是翻转了180度}在输入矩阵上滑动并做加权求和操作。参考零基础入门链接里的
+    二维卷积定义的图示并将其写成表达式即可理解！
+    (翻转指从两个维度(从上到下、 从左到右)颠倒次序, 即旋转180度)
+
+    \textbf{互相关}：设定如上述二维卷积，但公式变为$y_{i j}=\sum_{u=1}^{U} \sum_{v=1}^{V} w_{u v} x_{i+u-1, j+v-1}$
+    和二维卷积公式对比可知, \textbf{互相关的卷积核不进行翻转}。
+
+    \subsection{Back Propagation}
+    书本nndl 以及上述两个链接均采用链式法则+逐标量的推导方式来找到反向传播的矩阵表达式；
+    但是直接用矩阵、向量的链式法则是推导不出来的(因为是互相关操作而不是矩阵乘法)！
+
+    nndl中 Sec 5.1.4.2从互相关定义出发，逐分量给出了标量对进行了互相关操作后的矩阵的导数！
+    这与上述两个链接里求反向传播参数中使用到的推导方法是一样的！
+
+    理论推导看上述两个链接+nndl第五章即可！
+
+    \subsubsection{Naive实现}
+
+    具体细节说明见\href{https://www.zybuluo.com/hanbingtao/note/485480}{零基础入门深度学习(4)-卷积神经网络}；
+    实现参考：\href{https://github.com/hanbt/learn_dl/blob/master/cnn.py}{零基础入门深度学习(4)-卷积神经网络 具体实现}；
+    \href{https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/layers/layers.py}{numpy-ml}
+    中也有navie的backward()实现。
+
+    在Naive实现反向传播时：
+    \begin{itemize}
+        \item 求$\delta^{l-1} = \dfrac{\partial L}{\partial Z^{l-1}}$时，注意
+        $\delta^{l}$需要根据stride在对应位置补零从而还原成stride=1时的大小(即$\delta^{l}$周围
+        补一圈零)；第$l$层卷积核$W^{l}$需要翻转180度；然后$W^{l}$在还原后的$\delta^{l}$上进行互相关
+        操作再按照上述链接推导出的公式得出结果！
+        \item 求$\dfrac{\partial J}{\partial W^{l}}, \dfrac{\partial J}{\partial b}$时，不需要翻转！
+    \end{itemize}
+
+    \subsubsection{向量化实现}
+    如果在CNN layer的计算中，把前向传播变成矩阵乘法(下文提到的向量化)，那么在做反向传播的时候，就不需要去关心误差项
+    矩阵补零(padding)或者还原成步长(stride)为1时的矩阵了！直接利用类似全连接层的forward()+backward()最后
+    通过逆向量化操作(col2im)完成计算！
+
+\hspace*{\fill} \\
+    \textbf{向量化im2col()原理及基本实现参考}：
+    \begin{itemize}
+        \item \href{https://zhuanlan.zhihu.com/p/63974249}{最清晰的im2col过程及实现}(不带padding)
+        \item \href{https://zhuanlan.zhihu.com/p/40951745}{前向使用im2col，反向时的卷积操作也是用了im2col}(不带padding)，
+        没有利用类似全连接层BP的操作+col2im
+        \item \href{https://zhuanlan.zhihu.com/p/92722347}{前向im2col+反向col2im(没有Batch维度)}(主要看\textbf{类似全连接层的算法}过程)
+    \end{itemize}
+
+    \href{https://github.com/ddbourgin/numpy-ml/blob/master/numpy_ml/neural_nets/layers/layers.py#L2693-L2963}{numpy-ml}
+    的Conv2D层就是利用im2col+col2im等向量化手段实现了类似全连接层的操作，输入维度$=(B,H,W,C)$。
+
+    《深度学习入门：基于Python的理论与实现》中第7章 7.4 实现\href{https://github.com/hguomin/deep-learning-from-scratch/blob/master/common/layers.py}{卷积层和池化层}
+    forward()使用了im2col()；实现backward()使用了col2im()，但是它的
+    \href{https://github.com/hguomin/deep-learning-from-scratch/blob/master/common/util.py}{im2col()和col2im()}
+    都是用两层for循环实现的。而且是基于PyTorch的输入格式$(B, C, H, W)$。
+
+    (去掉for循环的im2col()实现见\href{https://zhuanlan.zhihu.com/p/64933417}{卷积算法另一种高效实现，as\_strided详解})
+
+\hspace*{\fill} \\
+    该书的实现流程如下：
+    假设输入张量为$X=(B,C,H,W)$，卷积核为$W=(C_{out}, C_{in}, FH, FW)$，$C_{out}$是卷积核数目，下文中$C=C_{in}$。
+
+    \textbf{forward()}:
+    \begin{itemize}
+        \item 输入张量$X=(B,C,H,W) \stackrel{im2col()}{\Longrightarrow} X=(B*H_{out}*W_{out}, FH*FW*C_{in})$
+        \item 卷积核$W=(C_{out}, C_{in}, FH, FW) \stackrel{reshape}{\Longrightarrow} W=(C_{out}, C_{in}*FH*FW) \stackrel{transpose}{\Longrightarrow} W=(C_{in}*FH*FW, C_{out})$
+        \item 输出矩阵$Y=XW+\boldsymbol{1b}^{T}$，这里的$\boldsymbol{1}=(B*H_{out}*W_{out}, 1)$是全1列向量，$\boldsymbol{b}=(B*H_{out}*W_{out}, 1)$也是列向量，$\boldsymbol{1b}^{T}$表明每个卷积核对应一个$b_{i}$元素！
+        \item 所以将矩阵还原回张量$Y=(B*H_{out}*W_{out}, C_{out})\stackrel{reshape}{\Longrightarrow} Y=(B, H_{out}, W_{out}, C_{out}) \stackrel{transpose}{\Longrightarrow}Y=(B,C_{out}, H_{out}, W_{out})$
+    \end{itemize}
+
+    \textbf{backward()}:
+    \begin{itemize}
+        \item 给定误差项张量$dY=(B,C_{out}, H_{out}, W_{out})$，先转为二维矩阵形式以便于利用链式法则直接求出导数，$\stackrel{transpose}{\Longrightarrow} dY=(B, H_{out}, W_{out}, C_{out})\stackrel{reshape}{\Longrightarrow} dY=(B*H_{out}*W_{out}, C_{out})$
+        \item 根据标量对矩阵求导的链式法则(见matrix derivative.pdf)，则有\\ $dW=X^{T}dY,\quad (X=(B*H_{out}*W_{out}, FH*FW*C_{in}))$；
+        再将$dW=(FH*FW*C_{in}, C_{out}) \stackrel{transpose}{\Longrightarrow} dW=(C_{out}, C_{in}*H_{out}*W_{out})\stackrel{reshape}{\Longrightarrow} dW=(C_{out}, C_{in}, H_{out}, W_{out})$
+        \item $dX=dY\cdot W^{T}, (W=(C_{in}*FH*FW, C_{out})), \quad dX=(B*H_{out}*W_{out}, FH*FW*C_{in}) \stackrel{col2im()}{\Longrightarrow} dX=(B, C_{in}, H, W)$
+        \item $d\boldsymbol{b}=dY^{T}\cdot \boldsymbol{1},\quad d\boldsymbol{b}=(C_{out},1)$，相当于np.sum(dY, axis=0)，有两种推导方法：\\
+        1. 按照链式法则$\boldsymbol{b}\rightarrow Y \rightarrow J$逐分量的推导，可以假设一个很小的例子开始；
+        \\
+        2. 按照微分法推导$dJ=tr[(\dfrac{\partial J}{\partial Y})^{T}dY]=tr[((\dfrac{\partial J}{\partial Y})^{T}\cdot \boldsymbol{1})^{T}d\boldsymbol{b}]$
+    \end{itemize}
+    (np.reshape是按照行的顺序叠加)
+
+    具体实现细节见上面给出对应书本源码的链接。需要注意的是，书上的im2col()和col2im()实现思路与
+    “向量化im2col()原理及基本实现参考”给出的3个链接中的思路不相同，但除了书上的方法较完善(带pading)
+    以及两者针对输入张量的维度顺序不同之外，最终的功能是一样的！
+
 
 
 \end{document}
