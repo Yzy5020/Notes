@@ -177,6 +177,35 @@
     “向量化im2col()原理及基本实现参考”给出的3个链接中的思路不相同，但除了书上的方法较完善(带pading)
     以及两者针对输入张量的维度顺序不同之外，最终的功能是一样的！
 
+    \section{Attention机制}
+    参考\href{https://zhuanlan.zhihu.com/p/106662375}{Attention Review}，
+    再看\href{https://www.zhihu.com/question/68482809}{JayLou娄杰的回答}!
+    能比较系统地了解传统attention(soft)和self-attention的计算过程！
+
+    \subsection{Q,K,V三元组}
+    soft-attention中有两种模式：
+    \begin{enumerate}
+        \item Key=Value=X
+        \item Key!=Value
+    \end{enumerate}
+    假设输入$X_{m\times n}$是由样本行向量拼成的矩阵，$Q_{m\times n},K_{m\times n},V_{m\times n}$，
+    且对应的$q_{i},k_{i},v_{i}$均是行向量！(写成列向量也行，后面的推导做转置即可)
+
+    则进行attention得到的特征变化结果：
+    \begin{itemize}
+        \item $att(\boldsymbol{q_{i}},(K,V))=\sum_{j=1}^{m}\alpha_{j}\boldsymbol{v}_{j}$
+        \item $\alpha_{j}=sim(\boldsymbol{q_{i},k_{j}})=softmax(\boldsymbol{q_{i},k_{j}})=\dfrac{\boldsymbol{q_{i}k_{j}}^T}{\sum_{l=1}^{m}\boldsymbol{q_{i}k_{l}}^T}$(这里假设注意力分布采用内积形式)
+        \item 所以$att(\boldsymbol{q_{i}},(K,V))=\sum_{j=1}^{m}\dfrac{\boldsymbol{q_{i}k_{j}}^T}{\sum_{l=1}^{m}\boldsymbol{q_{i}k_{l}}^T}\boldsymbol{v}_{j}$
+    \end{itemize}
+    写成矩阵化形式：
+    \begin{itemize}
+        \item $att(\boldsymbol{Q,K,V})_{m\times n}=softmax(\boldsymbol{QK}^T,dim=1)\boldsymbol{V}$，此处的softmax作用于矩阵的每一行！
+        \item 与前面的求和式进行对比，$(\boldsymbol{QK}^T)_{m\times m}$的第i行经过softmax后中的第j个值对应于$q_{i}$与行向量$k_{j}$的相似度$\alpha_{j}$；
+        \item 然后$(\boldsymbol{QK}^T)_{m\times m}$的第i行(1 x m)乘上矩阵$\boldsymbol{V}_{m\times n}$相当于前面求和式中最外层的求和表达式！
+        可以用矩阵乘法--->行x矩阵
+    \end{itemize}
+
+    \href{http://peterbloem.nl/blog/transformers}{Pytorch实现self-attention \& transformer}
 
 
 \end{document}
